@@ -28,16 +28,22 @@ public class Kamar extends javax.swing.JPanel {
     private void initComponents() {
 
         jLabel1 = new javax.swing.JLabel();
+        btn_hapus = new javax.swing.JButton();
 
         setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
+        jLabel1.setBackground(new java.awt.Color(255, 204, 204));
         jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/apk/makost/icon/Kamar (2).png"))); // NOI18N
         jLabel1.setText("Kamar");
         add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 1070, 670));
+
+        btn_hapus.setText("jButton1");
+        add(btn_hapus, new org.netbeans.lib.awtextra.AbsoluteConstraints(680, 613, 90, 40));
     }// </editor-fold>//GEN-END:initComponents
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton btn_hapus;
     private javax.swing.JLabel jLabel1;
     // End of variables declaration//GEN-END:variables
 }
