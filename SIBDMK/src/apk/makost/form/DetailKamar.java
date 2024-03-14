@@ -1,20 +1,19 @@
 /*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
+ * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
+ * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JInternalFrame.java to edit this template
  */
 package apk.makost.form;
 
 /**
  *
- * @author dF
+ * @author Neendy's
  */
-public class Kamar extends javax.swing.JPanel {
+public class DetailKamar extends javax.swing.JInternalFrame {
 
     /**
-     * Creates new form Kamar
+     * Creates new form DetailKamar
      */
-    public Kamar() {
+    public DetailKamar() {
         initComponents();
     }
 
@@ -29,19 +28,23 @@ public class Kamar extends javax.swing.JPanel {
 
         jLabel1 = new javax.swing.JLabel();
 
-        jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/apk/makost/form/Kamar (1).png"))); // NOI18N
-        jLabel1.setText("Kamar");
+        jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/apk/makost/form/DetailKamar.png"))); // NOI18N
 
-        javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
-        this.setLayout(layout);
+        javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
+        getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 960, javax.swing.GroupLayout.PREFERRED_SIZE)
+            .addComponent(jLabel1, javax.swing.GroupLayout.Alignment.TRAILING)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 541, javax.swing.GroupLayout.PREFERRED_SIZE)
+            .addGroup(layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jLabel1)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
+
+        pack();
     }// </editor-fold>//GEN-END:initComponents
 
 
