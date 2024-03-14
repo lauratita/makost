@@ -31,7 +31,7 @@ public class Header extends javax.swing.JPanel {
     
     public void date(){
         Date d = new Date();
-        SimpleDateFormat s=new SimpleDateFormat("dd-MM-yyyy");
+        SimpleDateFormat s=new SimpleDateFormat("EEEE dd MMMM yyyy");
         String dat = s.format(d);
         date.setText(dat);
     }
@@ -39,7 +39,7 @@ public class Header extends javax.swing.JPanel {
         new Timer (0,new ActionListener(){
             public void actionPerformed(ActionEvent ae){
                 Date d = new Date();
-                SimpleDateFormat s=new SimpleDateFormat("hh-mm");
+                SimpleDateFormat s=new SimpleDateFormat("hh : mm a");
                 String tim=s.format(d);
                 time.setText(tim);
             }   
@@ -75,7 +75,7 @@ public class Header extends javax.swing.JPanel {
 
         date.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
         date.setForeground(new java.awt.Color(0, 0, 0));
-        date.setText("date");
+        date.setText("Thrustday 22 March 2022");
 
         time.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
         time.setForeground(new java.awt.Color(0, 0, 0));
@@ -88,9 +88,9 @@ public class Header extends javax.swing.JPanel {
             .addGroup(shadowPanel1Layout.createSequentialGroup()
                 .addGap(23, 23, 23)
                 .addComponent(date)
-                .addGap(390, 390, 390)
+                .addGap(265, 265, 265)
                 .addComponent(time)
-                .addContainerGap(433, Short.MAX_VALUE))
+                .addContainerGap(391, Short.MAX_VALUE))
         );
         shadowPanel1Layout.setVerticalGroup(
             shadowPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)

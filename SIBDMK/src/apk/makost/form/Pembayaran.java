@@ -27,31 +27,191 @@ public class Pembayaran extends javax.swing.JPanel {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        jLabel1 = new javax.swing.JLabel();
+        shadowPanel1 = new apk.makost.swing.ShadowPanel();
+        txtPenyewa = new apk.makost.swing.TextField();
+        cbStatus = new apk.makost.swing.Combobox();
+        txtNoKamar = new apk.makost.swing.TextField();
+        txtKetBayar = new apk.makost.swing.TextField();
+        txtTotal = new apk.makost.swing.TextField();
+        txtJumlahBayar = new apk.makost.swing.TextField();
+        txtKembalian = new apk.makost.swing.TextField();
+        spTahunBulanHari = new apk.makost.swing.Spinner();
+        jScrollPane1 = new javax.swing.JScrollPane();
+        tb = new apk.makost.swing.Table();
+        button1 = new apk.makost.swing.Button();
 
-        jLabel1.setFont(new java.awt.Font("Segoe UI", 3, 24)); // NOI18N
-        jLabel1.setText("Bayar");
+        setBackground(new java.awt.Color(236, 243, 255));
+        setPreferredSize(new java.awt.Dimension(1069, 663));
+
+        txtPenyewa.setLabelText("Penyewa");
+        txtPenyewa.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                txtPenyewaActionPerformed(evt);
+            }
+        });
+
+        cbStatus.setLabeText("Status");
+
+        txtNoKamar.setLabelText("No Kamar");
+        txtNoKamar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                txtNoKamarActionPerformed(evt);
+            }
+        });
+
+        txtKetBayar.setLabelText("Keterangan Pembayaran");
+        txtKetBayar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                txtKetBayarActionPerformed(evt);
+            }
+        });
+
+        txtTotal.setLabelText("Total");
+        txtTotal.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                txtTotalActionPerformed(evt);
+            }
+        });
+
+        txtJumlahBayar.setLabelText("Jumlah Bayar");
+        txtJumlahBayar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                txtJumlahBayarActionPerformed(evt);
+            }
+        });
+
+        txtKembalian.setLabelText("Kembalian");
+        txtKembalian.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                txtKembalianActionPerformed(evt);
+            }
+        });
+
+        spTahunBulanHari.setLabelText("");
+
+        tb.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null}
+            },
+            new String [] {
+                "Title 1", "Title 2", "Title 3", "Title 4"
+            }
+        ));
+        jScrollPane1.setViewportView(tb);
+
+        button1.setBackground(new java.awt.Color(0, 255, 102));
+        button1.setForeground(new java.awt.Color(255, 255, 255));
+        button1.setText("BAYAR");
+
+        javax.swing.GroupLayout shadowPanel1Layout = new javax.swing.GroupLayout(shadowPanel1);
+        shadowPanel1.setLayout(shadowPanel1Layout);
+        shadowPanel1Layout.setHorizontalGroup(
+            shadowPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(shadowPanel1Layout.createSequentialGroup()
+                .addGap(30, 30, 30)
+                .addGroup(shadowPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addGroup(shadowPanel1Layout.createSequentialGroup()
+                        .addGroup(shadowPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(shadowPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                .addComponent(txtNoKamar, javax.swing.GroupLayout.PREFERRED_SIZE, 253, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGroup(shadowPanel1Layout.createSequentialGroup()
+                                    .addComponent(txtPenyewa, javax.swing.GroupLayout.PREFERRED_SIZE, 253, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addGap(39, 39, 39)
+                                    .addComponent(spTahunBulanHari, javax.swing.GroupLayout.PREFERRED_SIZE, 58, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                    .addComponent(cbStatus, javax.swing.GroupLayout.PREFERRED_SIZE, 98, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addComponent(txtKetBayar, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                            .addGroup(shadowPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                                .addGroup(shadowPanel1Layout.createSequentialGroup()
+                                    .addGroup(shadowPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                        .addComponent(txtJumlahBayar, javax.swing.GroupLayout.PREFERRED_SIZE, 253, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addComponent(txtTotal, javax.swing.GroupLayout.PREFERRED_SIZE, 253, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                    .addGap(79, 79, 79))
+                                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 1003, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addContainerGap(36, Short.MAX_VALUE))
+                    .addGroup(shadowPanel1Layout.createSequentialGroup()
+                        .addComponent(txtKembalian, javax.swing.GroupLayout.PREFERRED_SIZE, 253, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(button1, javax.swing.GroupLayout.PREFERRED_SIZE, 73, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(36, 36, 36))))
+        );
+        shadowPanel1Layout.setVerticalGroup(
+            shadowPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(shadowPanel1Layout.createSequentialGroup()
+                .addGap(19, 19, 19)
+                .addGroup(shadowPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(txtPenyewa, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(cbStatus, javax.swing.GroupLayout.PREFERRED_SIZE, 46, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(spTahunBulanHari, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(txtNoKamar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(txtKetBayar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 285, Short.MAX_VALUE)
+                .addGap(18, 18, 18)
+                .addComponent(txtTotal, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(txtJumlahBayar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(shadowPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(txtKembalian, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(button1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(22, 22, 22))
+        );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addGap(148, 148, 148)
-                .addComponent(jLabel1)
-                .addContainerGap(185, Short.MAX_VALUE))
+            .addComponent(shadowPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addGap(118, 118, 118)
-                .addComponent(jLabel1)
-                .addContainerGap(150, Short.MAX_VALUE))
+            .addComponent(shadowPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
     }// </editor-fold>//GEN-END:initComponents
 
+    private void txtPenyewaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtPenyewaActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_txtPenyewaActionPerformed
+
+    private void txtNoKamarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtNoKamarActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_txtNoKamarActionPerformed
+
+    private void txtKetBayarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtKetBayarActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_txtKetBayarActionPerformed
+
+    private void txtTotalActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtTotalActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_txtTotalActionPerformed
+
+    private void txtJumlahBayarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtJumlahBayarActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_txtJumlahBayarActionPerformed
+
+    private void txtKembalianActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtKembalianActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_txtKembalianActionPerformed
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JLabel jLabel1;
+    private apk.makost.swing.Button button1;
+    private apk.makost.swing.Combobox cbStatus;
+    private javax.swing.JScrollPane jScrollPane1;
+    private apk.makost.swing.ShadowPanel shadowPanel1;
+    private apk.makost.swing.Spinner spTahunBulanHari;
+    private apk.makost.swing.Table tb;
+    private apk.makost.swing.TextField txtJumlahBayar;
+    private apk.makost.swing.TextField txtKembalian;
+    private apk.makost.swing.TextField txtKetBayar;
+    private apk.makost.swing.TextField txtNoKamar;
+    private apk.makost.swing.TextField txtPenyewa;
+    private apk.makost.swing.TextField txtTotal;
     // End of variables declaration//GEN-END:variables
 }

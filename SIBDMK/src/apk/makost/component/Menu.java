@@ -3,6 +3,7 @@ package apk.makost.component;
 import apk.makost.event.MenuEvent;
 import apk.makost.shadow.ShadowRenderer;
 import apk.makost.swing.MenuButton;
+import apk.makost.swing.ScrollBar;
 import java.awt.Color;
 import java.awt.Component;
 import java.awt.Font;
@@ -36,7 +37,7 @@ public class Menu extends javax.swing.JPanel {
         scroll.setViewportBorder(null);
         scroll.setBorder(null);
         scroll.getViewport().setOpaque(false);
-//        scroll.getVerticalScrollBar(new ScrollBarCustom());
+        scroll.setVerticalScrollBar(new ScrollBar());
         panelMenu.setLayout(new MigLayout("wrap, fillx, inset 0", "[fill]"));
         TimingTarget target = new TimingTargetAdapter() {
             @Override
