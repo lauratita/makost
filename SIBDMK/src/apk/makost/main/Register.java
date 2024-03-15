@@ -338,6 +338,11 @@ private String filename;
         btnbuatakun.setFont(new java.awt.Font("Century Gothic", 0, 14)); // NOI18N
         btnbuatakun.setForeground(new java.awt.Color(255, 255, 255));
         btnbuatakun.setText("Buat Akun");
+        btnbuatakun.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnbuatakunActionPerformed(evt);
+            }
+        });
         jPanel2.add(btnbuatakun, new org.netbeans.lib.awtextra.AbsoluteConstraints(260, 630, 470, 40));
 
         jLabel34.setFont(new java.awt.Font("Segoe UI Semilight", 0, 12)); // NOI18N
@@ -419,6 +424,11 @@ private String filename;
             }
         }
     }//GEN-LAST:event_btnpilihfotoActionPerformed
+
+    private void btnbuatakunActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnbuatakunActionPerformed
+        // TODO add your handling code here:
+        
+    }//GEN-LAST:event_btnbuatakunActionPerformed
 
     /**
      * @param args the command line arguments
