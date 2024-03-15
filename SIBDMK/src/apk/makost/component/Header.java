@@ -39,11 +39,9 @@ public class Header extends javax.swing.JPanel {
         new Timer (0,new ActionListener(){
             public void actionPerformed(ActionEvent ae){
                 Date d = new Date();
-<<<<<<< HEAD
-                SimpleDateFormat s=new SimpleDateFormat("hh.mm");
-=======
-                SimpleDateFormat s=new SimpleDateFormat("hh : mm a");
->>>>>>> farhan
+
+                SimpleDateFormat s=new SimpleDateFormat("hh.mm a");
+
                 String tim=s.format(d);
                 time.setText(tim);
             }   
