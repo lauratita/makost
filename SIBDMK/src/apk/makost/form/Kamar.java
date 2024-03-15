@@ -90,7 +90,6 @@ public class Kamar extends javax.swing.JPanel {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-<<<<<<< HEAD
         txtnoKamar = new javax.swing.JTextField();
         txthargahari = new javax.swing.JTextField();
         txtlantai = new javax.swing.JTextField();
@@ -111,15 +110,15 @@ public class Kamar extends javax.swing.JPanel {
         txthargabulan = new javax.swing.JTextField();
         jLabel8 = new javax.swing.JLabel();
         txthargatahun = new javax.swing.JTextField();
-=======
+
         jLabel1 = new javax.swing.JLabel();
         btn_hapus = new javax.swing.JButton();
->>>>>>> dd6705b68192c182b78f47b1ab11e2b32703ee6e
+
 
         setBackground(new java.awt.Color(255, 255, 255));
         setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
-<<<<<<< HEAD
+
         txtnoKamar.setBackground(new java.awt.Color(243, 246, 251));
         add(txtnoKamar, new org.netbeans.lib.awtextra.AbsoluteConstraints(51, 80, 170, 30));
 
@@ -208,7 +207,7 @@ public class Kamar extends javax.swing.JPanel {
 
         txthargatahun.setBackground(new java.awt.Color(243, 246, 251));
         add(txthargatahun, new org.netbeans.lib.awtextra.AbsoluteConstraints(260, 160, 170, 30));
-=======
+
         jLabel1.setBackground(new java.awt.Color(255, 204, 204));
         jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/apk/makost/icon/Kamar (2).png"))); // NOI18N
         jLabel1.setText("Kamar");
@@ -216,7 +215,7 @@ public class Kamar extends javax.swing.JPanel {
 
         btn_hapus.setText("jButton1");
         add(btn_hapus, new org.netbeans.lib.awtextra.AbsoluteConstraints(680, 613, 90, 40));
->>>>>>> dd6705b68192c182b78f47b1ab11e2b32703ee6e
+
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnsimpanActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnsimpanActionPerformed
@@ -248,7 +247,7 @@ public class Kamar extends javax.swing.JPanel {
     */
     
     // Variables declaration - do not modify//GEN-BEGIN:variables
-<<<<<<< HEAD
+
     private javax.swing.JButton btnreset;
     private javax.swing.JButton btnsimpan;
     private javax.swing.JComboBox<String> cmbkapasitas;
@@ -269,9 +268,9 @@ public class Kamar extends javax.swing.JPanel {
     private javax.swing.JTextField txthargatahun;
     private javax.swing.JTextField txtlantai;
     private javax.swing.JTextField txtnoKamar;
-=======
+
     private javax.swing.JButton btn_hapus;
     private javax.swing.JLabel jLabel1;
->>>>>>> dd6705b68192c182b78f47b1ab11e2b32703ee6e
+
     // End of variables declaration//GEN-END:variables
 }
