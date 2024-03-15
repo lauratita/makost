@@ -4,6 +4,7 @@
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
 <<<<<<< HEAD
+<<<<<<< HEAD
             <file>file:/C:/Github%20Desktop/makost/SIBDMK/src/apk/makost/koneksi/Koneksi.java</file>
             <file>file:/C:/Github%20Desktop/makost/SIBDMK/src/apk/makost/form/ManajemenKamar.java</file>
             <file>file:/C:/Github%20Desktop/makost/SIBDMK/src/apk/makost/form/Dashboard.java</file>
@@ -14,6 +15,10 @@
             <file>file:/C:/Github%20Desktop/makost/SIBDMK/src/apk/makost/form/ManajemenKamar.java</file>
             <file>file:/C:/Github%20Desktop/makost/SIBDMK/src/apk/makost/koneksi/Koneksi.java</file>
 >>>>>>> farhan
+=======
+            <file>file:/C:/Users/DELL/Documents/NetBeansProjects/makost/SIBDMK/src/apk/makost/main/Login.java</file>
+            <file>file:/C:/Users/DELL/Documents/NetBeansProjects/makost/SIBDMK/src/apk/makost/main/Register.java</file>
+>>>>>>> dd6705b68192c182b78f47b1ab11e2b32703ee6e
         </group>
     </open-files>
 </project-private>
