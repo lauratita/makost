@@ -114,10 +114,8 @@ private String filename;
         labelfoto = new javax.swing.JLabel();
         btnpilihfoto = new javax.swing.JButton();
         jLabel36 = new javax.swing.JLabel();
-        jDateChooser1 = new com.toedter.calendar.JDateChooser();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
-        setPreferredSize(new java.awt.Dimension(1366, 768));
 
         jPanel1.setBackground(new java.awt.Color(243, 246, 251));
         jPanel1.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
@@ -373,10 +371,6 @@ private String filename;
         jLabel36.setText("Tanggal Lahir");
         jPanel2.add(jLabel36, new org.netbeans.lib.awtextra.AbsoluteConstraints(420, 380, 270, -1));
 
-        jDateChooser1.setBackground(new java.awt.Color(255, 255, 255));
-        jDateChooser1.setBorder(javax.swing.BorderFactory.createEmptyBorder(1, 1, 1, 1));
-        jPanel2.add(jDateChooser1, new org.netbeans.lib.awtextra.AbsoluteConstraints(420, 400, 310, -1));
-
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -471,7 +465,6 @@ private String filename;
     private javax.swing.JButton btnpilihfoto;
     private javax.swing.JComboBox<String> cbjabatan;
     private apk.makost.component.Header header2;
-    private com.toedter.calendar.JDateChooser jDateChooser1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel11;
