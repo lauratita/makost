@@ -5,6 +5,11 @@
  */
 package apk.makost.form;
 
+import java.sql.Connection;
+import java.sql.SQLException;
+import javax.swing.JOptionPane;
+import javax.swing.table.DefaultTableModel;
+
 /**
  *
  * @author dF
@@ -17,6 +22,64 @@ public class Kamar extends javax.swing.JPanel {
     public Kamar() {
         initComponents();
     }
+    
+//    tabel kamar
+    private void table_tersedia(){
+        DefaultTableModel model = new DefaultTableModel();
+        model.addColumn("No Kamar");
+        model.addColumn("Harga/hari");
+        model.addColumn("Harga/bulan");
+        model.addColumn("Harga/tahun");
+        model.addColumn("Kapasitas");
+        model.addColumn("Lantai");
+        model.addColumn("Fasilitas");
+        model.addColumn("Status");
+//        tbl_kamar.setModel(model);
+       
+        try{
+            String sql = "SELECT * FROM kamar";
+            java.sql.Connection conn = (Connection)apk.makost.koneksi.Koneksi.configDB();
+            java.sql.Statement stm = conn.createStatement();
+            java.sql.ResultSet res = stm.executeQuery(sql);
+            while(res.next())
+            {
+                model.addRow(new Object[]
+                {
+//                    ikutin jumlah kolom tabel di database
+                    res.getString(1),
+                    res.getString(2),
+                    res.getString(3),
+                    res.getString(4),
+                    res.getString(5),
+                    res.getString(6),
+                    res.getString(7),
+                    res.getString(8)
+                });
+            }
+                tbl_kamar.setModel(model);
+                
+        }catch (Exception e){
+            
+        }
+    }
+    
+    private void no_kamar() throws SQLException{
+        int no_kamar = 0;
+        int i = 0;
+        try{
+            String sql = "Select no_kamar from tbl_kamar";
+            java.sql.Connection conn = (Connection)apk.makost.koneksi.Koneksi.configDB();
+            java.sql.Statement stm = conn.createStatement();
+            java.sql.ResultSet res = stm.executeQuery(sql);
+            while(res.next()){
+                no_kamar = res.getInt("no_kamar");
+                int n = no_kamar+1;
+                txtnoKamar.setText(Integer.toString(n));
+            }
+        }catch(Exception e){
+            JOptionPane.showMessageDialog(null, e);
+        }
+    }
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -27,17 +90,168 @@ public class Kamar extends javax.swing.JPanel {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        jLabel1 = new javax.swing.JLabel();
+        txtnoKamar = new javax.swing.JTextField();
+        txthargahari = new javax.swing.JTextField();
+        txtlantai = new javax.swing.JTextField();
+        btnreset = new javax.swing.JButton();
+        btnsimpan = new javax.swing.JButton();
+        jScrollPane1 = new javax.swing.JScrollPane();
+        txtfasilitas = new javax.swing.JTextArea();
+        cmbkapasitas = new javax.swing.JComboBox<>();
+        jScrollPane2 = new javax.swing.JScrollPane();
+        tbl_kamar = new javax.swing.JTable();
+        txtcari = new javax.swing.JTextField();
+        jLabel2 = new javax.swing.JLabel();
+        jLabel3 = new javax.swing.JLabel();
+        jLabel4 = new javax.swing.JLabel();
+        jLabel5 = new javax.swing.JLabel();
+        jLabel6 = new javax.swing.JLabel();
+        jLabel7 = new javax.swing.JLabel();
+        txthargabulan = new javax.swing.JTextField();
+        jLabel8 = new javax.swing.JLabel();
+        txthargatahun = new javax.swing.JTextField();
 
+        setBackground(new java.awt.Color(255, 255, 255));
         setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
-        jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/apk/makost/icon/Kamar (2).png"))); // NOI18N
-        jLabel1.setText("Kamar");
-        add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 1070, 670));
+        txtnoKamar.setBackground(new java.awt.Color(243, 246, 251));
+        add(txtnoKamar, new org.netbeans.lib.awtextra.AbsoluteConstraints(51, 80, 170, 30));
+
+        txthargahari.setBackground(new java.awt.Color(243, 246, 251));
+        add(txthargahari, new org.netbeans.lib.awtextra.AbsoluteConstraints(51, 162, 170, 30));
+
+        txtlantai.setBackground(new java.awt.Color(243, 246, 251));
+        add(txtlantai, new org.netbeans.lib.awtextra.AbsoluteConstraints(460, 160, 170, 30));
+
+        btnreset.setBackground(new java.awt.Color(117, 149, 197));
+        btnreset.setFont(new java.awt.Font("STXihei", 1, 15)); // NOI18N
+        btnreset.setForeground(new java.awt.Color(255, 255, 255));
+        btnreset.setText("Reset");
+        add(btnreset, new org.netbeans.lib.awtextra.AbsoluteConstraints(55, 253, 110, 40));
+
+        btnsimpan.setBackground(new java.awt.Color(117, 149, 197));
+        btnsimpan.setFont(new java.awt.Font("STXihei", 1, 15)); // NOI18N
+        btnsimpan.setForeground(new java.awt.Color(255, 255, 255));
+        btnsimpan.setText("Simpan");
+        btnsimpan.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnsimpanActionPerformed(evt);
+            }
+        });
+        add(btnsimpan, new org.netbeans.lib.awtextra.AbsoluteConstraints(205, 253, 100, 40));
+
+        txtfasilitas.setBackground(new java.awt.Color(243, 246, 251));
+        txtfasilitas.setColumns(20);
+        txtfasilitas.setRows(5);
+        jScrollPane1.setViewportView(txtfasilitas);
+
+        add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(660, 80, 360, 150));
+
+        cmbkapasitas.setFont(new java.awt.Font("STXihei", 0, 12)); // NOI18N
+        cmbkapasitas.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "1 orang", "2 orang" }));
+        add(cmbkapasitas, new org.netbeans.lib.awtextra.AbsoluteConstraints(460, 80, 170, 30));
+
+        tbl_kamar.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null}
+            },
+            new String [] {
+                "Title 1", "Title 2", "Title 3", "Title 4"
+            }
+        ));
+        jScrollPane2.setViewportView(tbl_kamar);
+
+        add(jScrollPane2, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 310, 960, 320));
+
+        txtcari.setBackground(new java.awt.Color(243, 246, 251));
+        add(txtcari, new org.netbeans.lib.awtextra.AbsoluteConstraints(780, 260, 200, 30));
+
+        jLabel2.setFont(new java.awt.Font("STXihei", 1, 15)); // NOI18N
+        jLabel2.setText("No Kamar");
+        add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 50, -1, -1));
+
+        jLabel3.setFont(new java.awt.Font("STXihei", 1, 15)); // NOI18N
+        jLabel3.setText("Harga/hari");
+        add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 130, -1, -1));
+
+        jLabel4.setFont(new java.awt.Font("STXihei", 1, 15)); // NOI18N
+        jLabel4.setText("Lantai");
+        add(jLabel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(460, 130, -1, -1));
+
+        jLabel5.setFont(new java.awt.Font("STXihei", 1, 15)); // NOI18N
+        jLabel5.setText("Kapasitas");
+        add(jLabel5, new org.netbeans.lib.awtextra.AbsoluteConstraints(460, 50, -1, -1));
+
+        jLabel6.setFont(new java.awt.Font("STXihei", 1, 15)); // NOI18N
+        jLabel6.setText("Fasilitas");
+        add(jLabel6, new org.netbeans.lib.awtextra.AbsoluteConstraints(660, 50, -1, -1));
+
+        jLabel7.setFont(new java.awt.Font("STXihei", 1, 15)); // NOI18N
+        jLabel7.setText("Harga/bulan");
+        add(jLabel7, new org.netbeans.lib.awtextra.AbsoluteConstraints(260, 50, -1, -1));
+
+        txthargabulan.setBackground(new java.awt.Color(243, 246, 251));
+        add(txthargabulan, new org.netbeans.lib.awtextra.AbsoluteConstraints(260, 80, 170, 30));
+
+        jLabel8.setFont(new java.awt.Font("STXihei", 1, 15)); // NOI18N
+        jLabel8.setText("Harga/tahun");
+        add(jLabel8, new org.netbeans.lib.awtextra.AbsoluteConstraints(260, 130, -1, -1));
+
+        txthargatahun.setBackground(new java.awt.Color(243, 246, 251));
+        add(txthargatahun, new org.netbeans.lib.awtextra.AbsoluteConstraints(260, 160, 170, 30));
     }// </editor-fold>//GEN-END:initComponents
 
+    private void btnsimpanActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnsimpanActionPerformed
+        // TODO add your handling code here:
+        try {
+            String sql = "INSERT INTO tbl_kamar (no_kamar, harga_harian, harga_bulan, harga_tahun, kapasitas, lantai, fasilitas, status) "
+                    + "VALUES ('"+txtnoKamar.getText()+"',"
+                    + "'"+txtfasilitas.getText()+"','"+cmbkapasitas.getSelectedItem()+"',"
+                    + "'"+"Tersedia"+"','"+txtlantai.getText()+"')";
+            java.sql.Connection conn = (Connection)apk.makost.koneksi.Koneksi.configDB();
+            java.sql.PreparedStatement pst = conn.prepareStatement(sql);
+            pst.execute();
+            JOptionPane.showMessageDialog(null, "Data berhasil disimpan");
+            no_kamar();
+        }catch (Exception e){
+            JOptionPane.showMessageDialog(this, "Data tidak tersimpan");
+        }
+        table_tersedia();
+    }//GEN-LAST:event_btnsimpanActionPerformed
 
+/*  JTextField1 = txtnoKamar
+  JTextField2 = txtharga
+  JTextField3 = txtlantai
+  JTextField4 = txtcariKamar
+    JButton1 = btnreset
+    JButton2 = btnsimpan
+    JTextArea = txtFasilitas
+    
+    */
+    
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JLabel jLabel1;
+    private javax.swing.JButton btnreset;
+    private javax.swing.JButton btnsimpan;
+    private javax.swing.JComboBox<String> cmbkapasitas;
+    private javax.swing.JLabel jLabel2;
+    private javax.swing.JLabel jLabel3;
+    private javax.swing.JLabel jLabel4;
+    private javax.swing.JLabel jLabel5;
+    private javax.swing.JLabel jLabel6;
+    private javax.swing.JLabel jLabel7;
+    private javax.swing.JLabel jLabel8;
+    private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JScrollPane jScrollPane2;
+    private javax.swing.JTable tbl_kamar;
+    private javax.swing.JTextField txtcari;
+    private javax.swing.JTextArea txtfasilitas;
+    private javax.swing.JTextField txthargabulan;
+    private javax.swing.JTextField txthargahari;
+    private javax.swing.JTextField txthargatahun;
+    private javax.swing.JTextField txtlantai;
+    private javax.swing.JTextField txtnoKamar;
     // End of variables declaration//GEN-END:variables
 }
