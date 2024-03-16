@@ -7,7 +7,6 @@ package apk.makost.form;
 
 import apk.makost.model.ModelCard;
 import apk.makost.model.ModelChart;
-import apk.makost.model.StatusType;
 import java.awt.Color;
 import javax.swing.ImageIcon;
 
@@ -35,10 +34,10 @@ public class Dashboard extends javax.swing.JPanel {
         card3.setData(new ModelCard(new ImageIcon(getClass().getResource("/apk/makost/icon/LabaCard.png")), "Total Laba", "Rp.5.500.000", "Jumlah Per Tahun"));
         chart.start();
         //tambahkan data table
-        table.addRow(new Object[]{"Mike Bhand", "mikebhand@gmail.com", "Admin", "25 Apr,2018", StatusType.TAHUNAN});
-        table.addRow(new Object[]{"Andrew Strauss", "andrewstrauss@gmail.com", "Editor", "25 Apr,2018", StatusType.BULANAN});
-        table.addRow(new Object[]{"Ross Kopelman", "rosskopelman@gmail.com", "Subscriber", "25 Apr,2018", StatusType.BULANAN});
-        table.addRow(new Object[]{"Mike Hussy", "mikehussy@gmail.com", "Admin", "25 Apr,2018", StatusType.HARIAN});
+//        table.addRow(new Object[]{"Mike Bhand", "mikebhand@gmail.com", "Admin", "25 Apr,2018", StatusType.TAHUNAN});
+//        table.addRow(new Object[]{"Andrew Strauss", "andrewstrauss@gmail.com", "Editor", "25 Apr,2018", StatusType.BULANAN});
+//        table.addRow(new Object[]{"Ross Kopelman", "rosskopelman@gmail.com", "Subscriber", "25 Apr,2018", StatusType.BULANAN});
+//        table.addRow(new Object[]{"Mike Hussy", "mikehussy@gmail.com", "Admin", "25 Apr,2018", StatusType.HARIAN});
     }
 
     /**
@@ -59,8 +58,6 @@ public class Dashboard extends javax.swing.JPanel {
         jLabel1 = new javax.swing.JLabel();
         shadowPanel4 = new apk.makost.swing.ShadowPanel();
         jLabel2 = new javax.swing.JLabel();
-        jScrollPane1 = new javax.swing.JScrollPane();
-        table = new apk.makost.swing.Table();
 
         setBackground(new java.awt.Color(236, 243, 255));
         setForeground(new java.awt.Color(243, 246, 251));
@@ -101,7 +98,7 @@ public class Dashboard extends javax.swing.JPanel {
         shadowPanel3Layout.setVerticalGroup(
             shadowPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, shadowPanel3Layout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addContainerGap(26, Short.MAX_VALUE)
                 .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 45, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(chart, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -113,43 +110,21 @@ public class Dashboard extends javax.swing.JPanel {
         jLabel2.setForeground(new java.awt.Color(153, 153, 153));
         jLabel2.setText("Tabel Riwayat Pembayaran");
 
-        table.setModel(new javax.swing.table.DefaultTableModel(
-            new Object [][] {
-                {null, null, null, null, null}
-            },
-            new String [] {
-                "User", "Tanggal", "Penghuni", "Total", "Status"
-            }
-        ) {
-            boolean[] canEdit = new boolean [] {
-                false, false, false, false, false
-            };
-
-            public boolean isCellEditable(int rowIndex, int columnIndex) {
-                return canEdit [columnIndex];
-            }
-        });
-        jScrollPane1.setViewportView(table);
-
         javax.swing.GroupLayout shadowPanel4Layout = new javax.swing.GroupLayout(shadowPanel4);
         shadowPanel4.setLayout(shadowPanel4Layout);
         shadowPanel4Layout.setHorizontalGroup(
             shadowPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(shadowPanel4Layout.createSequentialGroup()
                 .addGap(17, 17, 17)
-                .addGroup(shadowPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 318, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel2))
-                .addContainerGap(36, Short.MAX_VALUE))
+                .addComponent(jLabel2)
+                .addContainerGap(116, Short.MAX_VALUE))
         );
         shadowPanel4Layout.setVerticalGroup(
             shadowPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(shadowPanel4Layout.createSequentialGroup()
                 .addGap(15, 15, 15)
                 .addComponent(jLabel2)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 383, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(20, Short.MAX_VALUE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
@@ -187,10 +162,8 @@ public class Dashboard extends javax.swing.JPanel {
     private apk.makost.chart.Chart chart;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
-    private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JLayeredPane panel;
     private apk.makost.swing.ShadowPanel shadowPanel3;
     private apk.makost.swing.ShadowPanel shadowPanel4;
-    private apk.makost.swing.Table table;
     // End of variables declaration//GEN-END:variables
 }
