@@ -1,6 +1,6 @@
 package apk.makost.swing;
 
-import apk.makost.model.StatusType;
+
 import java.awt.Color;
 import java.awt.Component;
 import javax.swing.JLabel;
