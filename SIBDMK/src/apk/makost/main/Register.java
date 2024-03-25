@@ -114,6 +114,7 @@ private String filename;
         labelfoto = new javax.swing.JLabel();
         btnpilihfoto = new javax.swing.JButton();
         jLabel36 = new javax.swing.JLabel();
+        jDateChooser1 = new com.toedter.calendar.JDateChooser();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -356,7 +357,7 @@ private String filename;
         jPanel2.add(jLabel35, new org.netbeans.lib.awtextra.AbsoluteConstraints(420, 430, 270, -1));
 
         labelfoto.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
-        jPanel2.add(labelfoto, new org.netbeans.lib.awtextra.AbsoluteConstraints(420, 500, 130, 120));
+        jPanel2.add(labelfoto, new org.netbeans.lib.awtextra.AbsoluteConstraints(420, 500, 220, 120));
 
         btnpilihfoto.setFont(new java.awt.Font("Segoe UI Semilight", 0, 12)); // NOI18N
         btnpilihfoto.setText("Pilih Foto");
@@ -365,11 +366,12 @@ private String filename;
                 btnpilihfotoActionPerformed(evt);
             }
         });
-        jPanel2.add(btnpilihfoto, new org.netbeans.lib.awtextra.AbsoluteConstraints(570, 590, -1, -1));
+        jPanel2.add(btnpilihfoto, new org.netbeans.lib.awtextra.AbsoluteConstraints(650, 590, -1, -1));
 
         jLabel36.setFont(new java.awt.Font("Segoe UI Semilight", 0, 12)); // NOI18N
         jLabel36.setText("Tanggal Lahir");
         jPanel2.add(jLabel36, new org.netbeans.lib.awtextra.AbsoluteConstraints(420, 380, 270, -1));
+        jPanel2.add(jDateChooser1, new org.netbeans.lib.awtextra.AbsoluteConstraints(420, 400, 270, -1));
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -465,6 +467,7 @@ private String filename;
     private javax.swing.JButton btnpilihfoto;
     private javax.swing.JComboBox<String> cbjabatan;
     private apk.makost.component.Header header2;
+    private com.toedter.calendar.JDateChooser jDateChooser1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel11;
