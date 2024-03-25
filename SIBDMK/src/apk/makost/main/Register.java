@@ -357,7 +357,7 @@ private String filename;
         jPanel2.add(jLabel35, new org.netbeans.lib.awtextra.AbsoluteConstraints(420, 430, 270, -1));
 
         labelfoto.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
-        jPanel2.add(labelfoto, new org.netbeans.lib.awtextra.AbsoluteConstraints(420, 500, 130, 120));
+        jPanel2.add(labelfoto, new org.netbeans.lib.awtextra.AbsoluteConstraints(420, 500, 220, 120));
 
         btnpilihfoto.setFont(new java.awt.Font("Segoe UI Semilight", 0, 12)); // NOI18N
         btnpilihfoto.setText("Pilih Foto");
@@ -366,7 +366,7 @@ private String filename;
                 btnpilihfotoActionPerformed(evt);
             }
         });
-        jPanel2.add(btnpilihfoto, new org.netbeans.lib.awtextra.AbsoluteConstraints(570, 590, -1, -1));
+        jPanel2.add(btnpilihfoto, new org.netbeans.lib.awtextra.AbsoluteConstraints(650, 590, -1, -1));
 
         jLabel36.setFont(new java.awt.Font("Segoe UI Semilight", 0, 12)); // NOI18N
         jLabel36.setText("Tanggal Lahir");
