@@ -44,7 +44,9 @@
                   <Component id="date" min="-2" max="-2" attributes="0"/>
                   <EmptySpace min="-2" pref="265" max="-2" attributes="0"/>
                   <Component id="time" min="-2" max="-2" attributes="0"/>
-                  <EmptySpace pref="391" max="32767" attributes="0"/>
+                  <EmptySpace pref="474" max="32767" attributes="0"/>
+                  <Component id="lblUser" min="-2" max="-2" attributes="0"/>
+                  <EmptySpace min="-2" pref="32" max="-2" attributes="0"/>
               </Group>
           </Group>
         </DimensionLayout>
@@ -55,6 +57,7 @@
                   <Group type="103" groupAlignment="3" attributes="0">
                       <Component id="time" alignment="3" min="-2" max="-2" attributes="0"/>
                       <Component id="date" alignment="3" min="-2" max="-2" attributes="0"/>
+                      <Component id="lblUser" alignment="3" min="-2" pref="25" max="-2" attributes="0"/>
                   </Group>
                   <EmptySpace pref="20" max="32767" attributes="0"/>
               </Group>
@@ -67,14 +70,7 @@
             <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
               <Font name="Segoe UI" size="18" style="0"/>
             </Property>
-<<<<<<< HEAD
-            <Property name="text" type="java.lang.String" value="date"/>
-=======
-            <Property name="foreground" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
-              <Color blue="0" green="0" red="0" type="rgb"/>
-            </Property>
             <Property name="text" type="java.lang.String" value="Thrustday 22 March 2022"/>
->>>>>>> farhan
           </Properties>
         </Component>
         <Component class="javax.swing.JLabel" name="time">
@@ -83,6 +79,14 @@
               <Font name="Segoe UI" size="18" style="0"/>
             </Property>
             <Property name="text" type="java.lang.String" value="time"/>
+          </Properties>
+        </Component>
+        <Component class="javax.swing.JLabel" name="lblUser">
+          <Properties>
+            <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
+              <Font name="Segoe UI" size="12" style="1"/>
+            </Property>
+            <Property name="text" type="java.lang.String" value="Admin"/>
           </Properties>
         </Component>
       </SubComponents>

@@ -32,16 +32,24 @@ public class Main extends javax.swing.JFrame {
                 } else if (index==2){
                     showForm(new Kamar());
                 } else if (index==3){
-                    showForm(new ManajemenKamar());
+                    showForm(new KapasitasKamar());
                 } else if (index==4){
-                    showForm(new Tarif());
+                    showForm(new ManajemenKamar());
                 } else if (index==5){
-                    showForm(new Pembayaran());
+                    showForm(new Tarif());
                 } else if (index==6){
-                    showForm(new RiwayatPembayaran());
+                    showForm(new Pembayaran());
                 } else if (index==7){
+                    showForm(new RiwayatPembayaran());
+                } else if (index==8){
+                    showForm(new Akun());
+                } else if (index==9){
                     showForm(new Pengeluaran());
-                } 
+                } else if (index==10){
+                    showForm(new Pendapatan());
+                } else if (index==11){
+
+                }
             }
         };
         menu.initMenu(event);

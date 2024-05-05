@@ -16,7 +16,7 @@ import javax.swing.JPanel;
 public class ShadowPanel extends JPanel {
     
     int shadowSize = 4;
-    float shadowOpacity = 0.2f;
+    float shadowOpacity = 0.15f;
     private Color shadowColor = Color.BLACK;
     
     public ShadowPanel(){

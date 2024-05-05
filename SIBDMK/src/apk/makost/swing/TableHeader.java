@@ -5,16 +5,13 @@
  */
 package apk.makost.swing;
 
+
 import java.awt.Color;
 import java.awt.Font;
 import java.awt.Graphics;
 import javax.swing.JLabel;
 import javax.swing.border.EmptyBorder;
 
-/**
- *
- * @author dF
- */
 public class TableHeader extends JLabel {
 
     public TableHeader(String text) {

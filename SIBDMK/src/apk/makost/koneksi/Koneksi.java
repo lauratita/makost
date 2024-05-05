@@ -16,23 +16,6 @@ import java.sql.Statement;
 public class Koneksi {
     public static Connection conn;
     public static Statement stm;
-//    method main
-//    public static void main(String[] args){
-//        try{
-//            String url = "jdbc:mysql://localhost:3306/dv_kos"; //link database
-//            String user = "root"; //nama database
-//            String pass = ""; //password database
-//            Class.forName("com.mysql.cj.jdbc.Driver"); //memanggil driver mysql dari jdbc (connectivity)
-//            
-//            conn = DriverManager.getConnection(url, user, pass); //menghubungkan url, user, pass
-//            stm = conn.createStatement(); //menjalankan perintal sql
-//            System.out.println("Koneksi Berhasil");
-//        } catch (Exception e){
-//            System.out.println("Koneksi Gagal" + e.getMessage());
-//        }
-//    }
-    
-//    method private
     
     
     private static Connection mysqlconfig;
@@ -50,3 +33,21 @@ public class Koneksi {
         return mysqlconfig;
     }
 }
+
+//    method main
+//    public static void main(String[] args){
+//        try{
+//            String url = "jdbc:mysql://localhost:3306/dv_kos"; //link database
+//            String user = "root"; //nama database
+//            String pass = ""; //password database
+//            Class.forName("com.mysql.cj.jdbc.Driver"); //memanggil driver mysql dari jdbc (connectivity)
+//            
+//            conn = DriverManager.getConnection(url, user, pass); //menghubungkan url, user, pass
+//            stm = conn.createStatement(); //menjalankan perintal sql
+//            System.out.println("Koneksi Berhasil");
+//        } catch (Exception e){
+//            System.out.println("Koneksi Gagal" + e.getMessage());
+//        }
+//    }
+    
+//    method private

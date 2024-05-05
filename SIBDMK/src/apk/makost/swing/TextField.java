@@ -88,7 +88,7 @@ public class TextField extends JTextField {
             }
 
         };
-        animator = new Animator(300, target);
+        animator = new Animator(100, target);
         animator.setResolution(0);
         animator.setAcceleration(0.5f);
         animator.setDeceleration(0.5f);
@@ -167,5 +167,9 @@ public class TextField extends JTextField {
             showing(string.equals(""));
         }
         super.setText(string);
+    }
+    
+    public String setText(int totalkembalian) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 }

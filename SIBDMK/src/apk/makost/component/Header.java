@@ -39,9 +39,7 @@ public class Header extends javax.swing.JPanel {
         new Timer (0,new ActionListener(){
             public void actionPerformed(ActionEvent ae){
                 Date d = new Date();
-
-                SimpleDateFormat s=new SimpleDateFormat("hh.mm a");
-
+                SimpleDateFormat s=new SimpleDateFormat("hh : mm a");
                 String tim=s.format(d);
                 time.setText(tim);
             }   
@@ -71,17 +69,19 @@ public class Header extends javax.swing.JPanel {
         shadowPanel1 = new apk.makost.swing.ShadowPanel();
         date = new javax.swing.JLabel();
         time = new javax.swing.JLabel();
+        lblUser = new javax.swing.JLabel();
 
         setBackground(new java.awt.Color(236, 243, 255));
         setForeground(new java.awt.Color(255, 255, 255));
 
         date.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
-        date.setForeground(new java.awt.Color(0, 0, 0));
         date.setText("Thrustday 22 March 2022");
 
         time.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
-        time.setForeground(new java.awt.Color(0, 0, 0));
         time.setText("time");
+
+        lblUser.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
+        lblUser.setText("Admin");
 
         javax.swing.GroupLayout shadowPanel1Layout = new javax.swing.GroupLayout(shadowPanel1);
         shadowPanel1.setLayout(shadowPanel1Layout);
@@ -92,7 +92,9 @@ public class Header extends javax.swing.JPanel {
                 .addComponent(date)
                 .addGap(265, 265, 265)
                 .addComponent(time)
-                .addContainerGap(391, Short.MAX_VALUE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 474, Short.MAX_VALUE)
+                .addComponent(lblUser)
+                .addGap(32, 32, 32))
         );
         shadowPanel1Layout.setVerticalGroup(
             shadowPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -100,7 +102,8 @@ public class Header extends javax.swing.JPanel {
                 .addGap(14, 14, 14)
                 .addGroup(shadowPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(time)
-                    .addComponent(date))
+                    .addComponent(date)
+                    .addComponent(lblUser, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addContainerGap(20, Short.MAX_VALUE))
         );
 
@@ -119,6 +122,7 @@ public class Header extends javax.swing.JPanel {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel date;
+    private javax.swing.JLabel lblUser;
     private apk.makost.swing.ShadowPanel shadowPanel1;
     private javax.swing.JLabel time;
     // End of variables declaration//GEN-END:variables

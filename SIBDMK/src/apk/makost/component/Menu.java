@@ -3,6 +3,7 @@ package apk.makost.component;
 import apk.makost.event.MenuEvent;
 import apk.makost.shadow.ShadowRenderer;
 import apk.makost.swing.MenuButton;
+import apk.makost.swing.Split;
 import apk.makost.swing.ScrollBar;
 import java.awt.Color;
 import java.awt.Component;
@@ -37,7 +38,7 @@ public class Menu extends javax.swing.JPanel {
         scroll.setViewportBorder(null);
         scroll.setBorder(null);
         scroll.getViewport().setOpaque(false);
-        scroll.setVerticalScrollBar(new ScrollBar());
+        scroll.getVerticalScrollBar();
         panelMenu.setLayout(new MigLayout("wrap, fillx, inset 0", "[fill]"));
         TimingTarget target = new TimingTargetAdapter() {
             @Override
@@ -49,7 +50,7 @@ public class Menu extends javax.swing.JPanel {
             }
 
         };
-        animator = new Animator(300, target);
+        animator = new Animator(100, target);
         animator.setAcceleration(.5f);
         animator.setDeceleration(.5f);
         animator.setResolution(0);
@@ -60,14 +61,17 @@ public class Menu extends javax.swing.JPanel {
         addMenu("dashboard", "Dashboard", 0);
         addMenu("penghuni", "Penghuni", 1);
         addMenu("kamar", "Kamar", 2);
-        addMenu("mkamar", "Manajemen Kamar", 3);
-        addMenu("tarif", "Data Tarif", 4);
-        addMenu("bayar", "Pembayaran", 5);
-        addMenu("riwayat", "Riwayat Pembayaran", 6);
-        addMenu("pengeluaran", "Pengeluaran", 7);
-        addMenu("pendapatan", "Pendapatan", 8);
+        addMenu("kapasitas", "Kapasitas Kamar", 3);
+        addMenu("mkamar", "Manajemen Kamar", 4);
+        addMenu("tarif", "Data Tarif", 5);
+        addMenu("bayar", "Pembayaran", 6);
+        addMenu("riwayat", "Riwayat Pembayaran", 7);
+        addMenu("akun", "Akun", 8);
+        split("Laporan");
+        addMenu("pengeluaran", "Pengeluaran", 9);
+        addMenu("pendapatan", "Pendapatan", 10);
         space();
-        addMenu("logout", "Log Out", 9);
+        addMenu("logout", "Log Out", 11);
     }
 
     private void addMenu(String icon, String text, int index) {
@@ -93,6 +97,10 @@ public class Menu extends javax.swing.JPanel {
     
     private void space(){
         panelMenu.add(new JLabel(),"push");
+    }
+    
+    private void split(String name) {
+        panelMenu.add(new Split(name), "h 0");
     }
 
     public void setSelected(int index) {
@@ -124,7 +132,7 @@ public class Menu extends javax.swing.JPanel {
         int width = getWidth() - size;
         int height = getHeight();
         BufferedImage img = new BufferedImage(width, height, BufferedImage.TYPE_INT_ARGB);
-        Graphics2D g  = img.createGraphics();
+        Graphics2D g = img.createGraphics();
         g.setBackground(getBackground());
         g.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
         g.fillRoundRect(0, 0, width, height, 10, 0);
