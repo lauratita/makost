@@ -278,9 +278,9 @@ public class Kamar extends javax.swing.JPanel {
         });
         jScrollPane1.setViewportView(tbl_dataKamar);
 
-        btneditkamar.setBackground(new java.awt.Color(207, 211, 0));
+        btneditkamar.setBackground(new java.awt.Color(252, 210, 6));
         btneditkamar.setForeground(new java.awt.Color(255, 255, 255));
-        btneditkamar.setText("EDIT");
+        btneditkamar.setText("UBAH");
         btneditkamar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btneditkamarActionPerformed(evt);
@@ -305,7 +305,7 @@ public class Kamar extends javax.swing.JPanel {
             }
         });
 
-        btnresetkamar.setBackground(new java.awt.Color(126, 166, 195));
+        btnresetkamar.setBackground(new java.awt.Color(76, 175, 80));
         btnresetkamar.setForeground(new java.awt.Color(255, 255, 255));
         btnresetkamar.setText("RESET");
         btnresetkamar.addActionListener(new java.awt.event.ActionListener() {
@@ -314,7 +314,7 @@ public class Kamar extends javax.swing.JPanel {
             }
         });
 
-        btnsimpankamar.setBackground(new java.awt.Color(126, 166, 195));
+        btnsimpankamar.setBackground(new java.awt.Color(33, 150, 243));
         btnsimpankamar.setForeground(new java.awt.Color(255, 255, 255));
         btnsimpankamar.setText("SIMPAN");
         btnsimpankamar.addActionListener(new java.awt.event.ActionListener() {
@@ -348,7 +348,9 @@ public class Kamar extends javax.swing.JPanel {
                         .addComponent(btneditkamar, javax.swing.GroupLayout.PREFERRED_SIZE, 73, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(btnresetkamar, javax.swing.GroupLayout.PREFERRED_SIZE, 73, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(469, 469, 469)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(btnhapuskamar, javax.swing.GroupLayout.PREFERRED_SIZE, 73, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(390, 390, 390)
                         .addComponent(txtcari, javax.swing.GroupLayout.PREFERRED_SIZE, 203, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(shadowPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                         .addComponent(jScrollPane1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 1003, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -363,8 +365,7 @@ public class Kamar extends javax.swing.JPanel {
                             .addGap(93, 93, 93)
                             .addGroup(shadowPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                 .addComponent(jLabel33, javax.swing.GroupLayout.PREFERRED_SIZE, 240, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 290, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                        .addComponent(btnhapuskamar, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 73, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                                .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 290, javax.swing.GroupLayout.PREFERRED_SIZE)))))
                 .addGap(36, 36, 36))
         );
         shadowPanel1Layout.setVerticalGroup(
@@ -390,12 +391,11 @@ public class Kamar extends javax.swing.JPanel {
                     .addComponent(txtcari, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(btnresetkamar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(btnsimpankamar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(btneditkamar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 14, Short.MAX_VALUE)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 308, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18)
-                .addComponent(btnhapuskamar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(42, 42, 42))
+                    .addComponent(btneditkamar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(btnhapuskamar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(14, 14, 14)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 342, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(67, 67, 67))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);

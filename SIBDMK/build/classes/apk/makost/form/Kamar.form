@@ -48,7 +48,9 @@
                           <Component id="btneditkamar" min="-2" pref="73" max="-2" attributes="0"/>
                           <EmptySpace max="-2" attributes="0"/>
                           <Component id="btnresetkamar" min="-2" pref="73" max="-2" attributes="0"/>
-                          <EmptySpace min="-2" pref="469" max="-2" attributes="0"/>
+                          <EmptySpace max="-2" attributes="0"/>
+                          <Component id="btnhapuskamar" min="-2" pref="73" max="-2" attributes="0"/>
+                          <EmptySpace min="-2" pref="390" max="-2" attributes="0"/>
                           <Component id="txtcari" min="-2" pref="203" max="-2" attributes="0"/>
                       </Group>
                       <Group type="103" groupAlignment="0" attributes="0">
@@ -69,7 +71,6 @@
                                   <Component id="jScrollPane2" min="-2" pref="290" max="-2" attributes="0"/>
                               </Group>
                           </Group>
-                          <Component id="btnhapuskamar" alignment="1" min="-2" pref="73" max="-2" attributes="0"/>
                       </Group>
                   </Group>
                   <EmptySpace min="-2" pref="36" max="-2" attributes="0"/>
@@ -105,12 +106,11 @@
                       <Component id="btnresetkamar" alignment="3" min="-2" max="-2" attributes="0"/>
                       <Component id="btnsimpankamar" alignment="3" min="-2" max="-2" attributes="0"/>
                       <Component id="btneditkamar" alignment="3" min="-2" max="-2" attributes="0"/>
+                      <Component id="btnhapuskamar" alignment="3" min="-2" max="-2" attributes="0"/>
                   </Group>
-                  <EmptySpace pref="14" max="32767" attributes="0"/>
-                  <Component id="jScrollPane1" min="-2" pref="308" max="-2" attributes="0"/>
-                  <EmptySpace type="separate" max="-2" attributes="0"/>
-                  <Component id="btnhapuskamar" min="-2" max="-2" attributes="0"/>
-                  <EmptySpace min="-2" pref="42" max="-2" attributes="0"/>
+                  <EmptySpace min="-2" pref="14" max="-2" attributes="0"/>
+                  <Component id="jScrollPane1" min="-2" pref="342" max="-2" attributes="0"/>
+                  <EmptySpace min="-2" pref="67" max="-2" attributes="0"/>
               </Group>
           </Group>
         </DimensionLayout>
@@ -188,12 +188,12 @@
         <Component class="apk.makost.swing.Button" name="btneditkamar">
           <Properties>
             <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
-              <Color blue="0" green="d3" red="cf" type="rgb"/>
+              <Color blue="6" green="d2" red="fc" type="rgb"/>
             </Property>
             <Property name="foreground" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
               <Color blue="ff" green="ff" red="ff" type="rgb"/>
             </Property>
-            <Property name="text" type="java.lang.String" value="EDIT"/>
+            <Property name="text" type="java.lang.String" value="UBAH"/>
           </Properties>
           <Events>
             <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btneditkamarActionPerformed"/>
@@ -248,7 +248,7 @@
         <Component class="apk.makost.swing.Button" name="btnresetkamar">
           <Properties>
             <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
-              <Color blue="c3" green="a6" red="7e" type="rgb"/>
+              <Color blue="50" green="af" red="4c" type="rgb"/>
             </Property>
             <Property name="foreground" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
               <Color blue="ff" green="ff" red="ff" type="rgb"/>
@@ -262,7 +262,7 @@
         <Component class="apk.makost.swing.Button" name="btnsimpankamar">
           <Properties>
             <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
-              <Color blue="c3" green="a6" red="7e" type="rgb"/>
+              <Color blue="f3" green="96" red="21" type="rgb"/>
             </Property>
             <Property name="foreground" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
               <Color blue="ff" green="ff" red="ff" type="rgb"/>

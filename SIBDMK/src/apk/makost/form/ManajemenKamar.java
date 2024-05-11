@@ -33,9 +33,16 @@ import jbarcodebean.JBarcodeBean;
 import net.sourceforge.jbarcodebean.model.AbstractBarcodeStrategy;
 import net.sourceforge.jbarcodebean.model.Codabar;
 import com.barcodelib.barcode.Linear;
+import java.awt.Desktop;
 import java.awt.Font;
+import java.awt.Window;
+import java.io.File;
+import java.io.IOException;
+import javax.imageio.ImageIO;
 import javax.swing.ImageIcon;
-import jnaFile
+import javax.swing.SwingUtilities;
+import jnafilechooser.api.JnaFileChooser;
+
 
 
 
@@ -211,6 +218,8 @@ public class ManajemenKamar extends javax.swing.JPanel {
             barcode.setTextFont(new Font("Arial", 0, 12));
             
             
+//            image = barcode.draw(new BufferedImage(barcodeWidth, barcodeHeigth, BufferedImage.TYPE_INT_BGR));
+            
             String fname = txtIdManajemenKamar.getText();
             
             barcode.renderBarcode("src\\apk\\makost\\img\\barcode\\" + fname + ".png");
@@ -225,12 +234,6 @@ public class ManajemenKamar extends javax.swing.JPanel {
         tabel_tersedia();
     }
     
-//    export bacode
-    private boolean exportBarcode(BufferedImage imageBarcode){
-        JnaFileChooser fileChooser = new JnaFileChooser();
-        boolean action = fileChooser.showSaveDialog(window);
-        
-    }
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -255,7 +258,7 @@ public class ManajemenKamar extends javax.swing.JPanel {
         txtIdManajemenKamar = new apk.makost.swing.TextField();
         jLabel3 = new javax.swing.JLabel();
         lb_barcode = new javax.swing.JLabel();
-        btnSimpanManajemenKamar1 = new apk.makost.swing.Button();
+        btnExport = new apk.makost.swing.Button();
 
         setBackground(new java.awt.Color(236, 243, 255));
         setPreferredSize(new java.awt.Dimension(1069, 663));
@@ -302,16 +305,16 @@ public class ManajemenKamar extends javax.swing.JPanel {
         });
         jScrollPane1.setViewportView(tbl_manajemenKamar);
 
-        btnEditManajemenKamar.setBackground(new java.awt.Color(207, 211, 0));
+        btnEditManajemenKamar.setBackground(new java.awt.Color(252, 210, 6));
         btnEditManajemenKamar.setForeground(new java.awt.Color(255, 255, 255));
-        btnEditManajemenKamar.setText("EDIT");
+        btnEditManajemenKamar.setText("UBAH");
         btnEditManajemenKamar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnEditManajemenKamarActionPerformed(evt);
             }
         });
 
-        btnResetManajemenKamar.setBackground(new java.awt.Color(126, 166, 195));
+        btnResetManajemenKamar.setBackground(new java.awt.Color(76, 175, 80));
         btnResetManajemenKamar.setForeground(new java.awt.Color(255, 255, 255));
         btnResetManajemenKamar.setText("RESET");
         btnResetManajemenKamar.addActionListener(new java.awt.event.ActionListener() {
@@ -320,7 +323,7 @@ public class ManajemenKamar extends javax.swing.JPanel {
             }
         });
 
-        btnSimpanManajemenKamar.setBackground(new java.awt.Color(126, 166, 195));
+        btnSimpanManajemenKamar.setBackground(new java.awt.Color(33, 150, 243));
         btnSimpanManajemenKamar.setForeground(new java.awt.Color(255, 255, 255));
         btnSimpanManajemenKamar.setText("SIMPAN");
         btnSimpanManajemenKamar.addActionListener(new java.awt.event.ActionListener() {
@@ -362,14 +365,12 @@ public class ManajemenKamar extends javax.swing.JPanel {
         jLabel3.setForeground(new java.awt.Color(153, 153, 153));
         jLabel3.setText("Barcode");
 
-        lb_barcode.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
-
-        btnSimpanManajemenKamar1.setBackground(new java.awt.Color(210, 70, 70));
-        btnSimpanManajemenKamar1.setForeground(new java.awt.Color(255, 255, 255));
-        btnSimpanManajemenKamar1.setText("EXPORT BARCODE");
-        btnSimpanManajemenKamar1.addActionListener(new java.awt.event.ActionListener() {
+        btnExport.setBackground(new java.awt.Color(210, 70, 70));
+        btnExport.setForeground(new java.awt.Color(255, 255, 255));
+        btnExport.setText("EXPORT BARCODE");
+        btnExport.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnSimpanManajemenKamar1ActionPerformed(evt);
+                btnExportActionPerformed(evt);
             }
         });
 
@@ -377,18 +378,17 @@ public class ManajemenKamar extends javax.swing.JPanel {
         shadowPanel1.setLayout(shadowPanel1Layout);
         shadowPanel1Layout.setHorizontalGroup(
             shadowPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, shadowPanel1Layout.createSequentialGroup()
+            .addGroup(shadowPanel1Layout.createSequentialGroup()
                 .addGap(30, 30, 30)
                 .addGroup(shadowPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(btnExport, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addGroup(shadowPanel1Layout.createSequentialGroup()
-                        .addComponent(btnResetManajemenKamar, javax.swing.GroupLayout.PREFERRED_SIZE, 73, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addComponent(btnSimpanManajemenKamar, javax.swing.GroupLayout.PREFERRED_SIZE, 73, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(btnEditManajemenKamar, javax.swing.GroupLayout.PREFERRED_SIZE, 73, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(btnSimpanManajemenKamar1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(402, 402, 402)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(btnResetManajemenKamar, javax.swing.GroupLayout.PREFERRED_SIZE, 73, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(548, 548, 548)
                         .addComponent(txtcari, javax.swing.GroupLayout.PREFERRED_SIZE, 203, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 1003, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addGroup(shadowPanel1Layout.createSequentialGroup()
@@ -434,11 +434,12 @@ public class ManajemenKamar extends javax.swing.JPanel {
                     .addComponent(txtcari, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(btnResetManajemenKamar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(btnSimpanManajemenKamar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(btnEditManajemenKamar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(btnSimpanManajemenKamar1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(btnEditManajemenKamar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 282, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(109, 109, 109))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(btnExport, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(56, 56, 56))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
@@ -528,17 +529,25 @@ public class ManajemenKamar extends javax.swing.JPanel {
         // TODO add your handling code here:
     }//GEN-LAST:event_txtJatuhTempoActionPerformed
 
-    private void btnSimpanManajemenKamar1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSimpanManajemenKamar1ActionPerformed
-        // TODO add your handling code here:
-        
-    }//GEN-LAST:event_btnSimpanManajemenKamar1ActionPerformed
+    private void btnExportActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnExportActionPerformed
+        try{
+            BufferedImage image = new BufferedImage(lb_barcode.getWidth(), lb_barcode.getHeight(), BufferedImage.TYPE_INT_ARGB);
+            lb_barcode.paint(image.getGraphics());
+            String fname = txtIdManajemenKamar.getText();
+            String path = "src\\apk\\makost\\img\\barcode\\" + fname + ".png";
+            ImageIO.write(image, "png", new File(path));
+            Desktop.getDesktop().print(new File(path));
+        } catch (IOException e){
+            JOptionPane.showMessageDialog(null, e);
+        }
+    }//GEN-LAST:event_btnExportActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private apk.makost.swing.Button btnEditManajemenKamar;
+    private apk.makost.swing.Button btnExport;
     private apk.makost.swing.Button btnResetManajemenKamar;
     private apk.makost.swing.Button btnSimpanManajemenKamar;
-    private apk.makost.swing.Button btnSimpanManajemenKamar1;
     private apk.makost.swing.Combobox cmbNamaPenghuni;
     private apk.makost.swing.Combobox cmbnoKamar;
     private javax.swing.JLabel jLabel1;
