@@ -6,8 +6,8 @@
 package apk.makost.form;
 
 import apk.makost.koneksi.Koneksi;
-import apk.makost.form.list.ListKamar1;
-import apk.makost.form.list.ListTarif1;
+import apk.makost.form.list.ListKamar;
+import apk.makost.form.list.ListTarif;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -790,13 +790,13 @@ public class Pembayaran extends javax.swing.JPanel {
 
     private void btncariTarifActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btncariTarifActionPerformed
         // TODO add your handling code here:
-        ListTarif1 a = new ListTarif1();
+        ListTarif a = new ListTarif();
         a.setVisible(true);
     }//GEN-LAST:event_btncariTarifActionPerformed
 
     private void btncariKamarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btncariKamarActionPerformed
         // TODO add your handling code here:
-        ListKamar1 b = new ListKamar1();
+        ListKamar b = new ListKamar();
         b.setVisible(true);
     }//GEN-LAST:event_btncariKamarActionPerformed
 

@@ -11,15 +11,18 @@ import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.LayoutManager;
 import java.awt.RenderingHints;
+import java.sql.Connection;
 import javax.swing.JFrame;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
+ 
 
 /**
  *
  * @author DELL
  */
 public class Login extends javax.swing.JFrame {
-
+String hakakses ;
     /**
      * Creates new form Login
      */
@@ -27,6 +30,16 @@ public class Login extends javax.swing.JFrame {
         initComponents();
         this.setExtendedState(JFrame.MAXIMIZED_BOTH);
     }
+    
+    class user{
+        String un, pw, foto="";
+        public user(){
+        un = txtusernamelogin.getText();
+        pw = txtpassword.getText();
+        }
+    }
+    
+        
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -45,7 +58,7 @@ public class Login extends javax.swing.JFrame {
         jPanel6 = new RoundedPanel(200, Color.LIGHT_GRAY);
         jPanel2 = new javax.swing.JPanel();
         header1 = new apk.makost.component.Header();
-        txtusername = new javax.swing.JTextField();
+        txtusernamelogin = new javax.swing.JTextField();
         jLabel2 = new javax.swing.JLabel();
         jLabel3 = new javax.swing.JLabel();
         jLabel4 = new javax.swing.JLabel();
@@ -58,11 +71,13 @@ public class Login extends javax.swing.JFrame {
         jLabel9 = new javax.swing.JLabel();
         jLabel10 = new javax.swing.JLabel();
         jLabel11 = new javax.swing.JLabel();
-        jButton1 = new javax.swing.JButton();
+        btn_login = new javax.swing.JButton();
         jLabel12 = new javax.swing.JLabel();
         jLabel13 = new javax.swing.JLabel();
+        jLabel8 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setUndecorated(true);
 
         jPanel1.setBackground(new java.awt.Color(243, 246, 251));
         jPanel1.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
@@ -139,14 +154,14 @@ public class Login extends javax.swing.JFrame {
         jPanel2.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
         jPanel2.add(header1, new org.netbeans.lib.awtextra.AbsoluteConstraints(29, 23, 579, -1));
 
-        txtusername.setFont(txtusername.getFont().deriveFont(txtusername.getFont().getSize()+2f));
-        txtusername.setBorder(null);
-        txtusername.addActionListener(new java.awt.event.ActionListener() {
+        txtusernamelogin.setFont(txtusernamelogin.getFont().deriveFont(txtusernamelogin.getFont().getSize()+2f));
+        txtusernamelogin.setBorder(null);
+        txtusernamelogin.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                txtusernameActionPerformed(evt);
+                txtusernameloginActionPerformed(evt);
             }
         });
-        jPanel2.add(txtusername, new org.netbeans.lib.awtextra.AbsoluteConstraints(70, 300, 430, 30));
+        jPanel2.add(txtusernamelogin, new org.netbeans.lib.awtextra.AbsoluteConstraints(70, 300, 430, 30));
 
         jLabel2.setFont(new java.awt.Font("Century Gothic", 1, 18)); // NOI18N
         jLabel2.setText("Log in ke Akun anda");
@@ -163,7 +178,6 @@ public class Login extends javax.swing.JFrame {
         jLabel5.setIcon(new javax.swing.ImageIcon(getClass().getResource("/apk/makost/icon/user.png"))); // NOI18N
         jPanel2.add(jLabel5, new org.netbeans.lib.awtextra.AbsoluteConstraints(520, 300, 41, 50));
 
-        jLabel6.setFont(new java.awt.Font("Segoe UI", 0, 12)); // NOI18N
         jLabel6.setText("Password");
         jPanel2.add(jLabel6, new org.netbeans.lib.awtextra.AbsoluteConstraints(67, 360, 495, -1));
 
@@ -206,12 +220,17 @@ public class Login extends javax.swing.JFrame {
         jLabel11.setText("Lupa Password?");
         jPanel2.add(jLabel11, new org.netbeans.lib.awtextra.AbsoluteConstraints(262, 473, -1, -1));
 
-        jButton1.setBackground(new java.awt.Color(54, 134, 178));
-        jButton1.setFont(new java.awt.Font("Segoe UI Semibold", 1, 14)); // NOI18N
-        jButton1.setForeground(new java.awt.Color(255, 255, 255));
-        jButton1.setText("LOGIN");
-        jButton1.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
-        jPanel2.add(jButton1, new org.netbeans.lib.awtextra.AbsoluteConstraints(64, 495, 490, 40));
+        btn_login.setBackground(new java.awt.Color(54, 134, 178));
+        btn_login.setFont(new java.awt.Font("Segoe UI Semibold", 1, 14)); // NOI18N
+        btn_login.setForeground(new java.awt.Color(255, 255, 255));
+        btn_login.setText("LOGIN");
+        btn_login.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        btn_login.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btn_loginActionPerformed(evt);
+            }
+        });
+        jPanel2.add(btn_login, new org.netbeans.lib.awtextra.AbsoluteConstraints(64, 495, 490, 40));
 
         jLabel12.setFont(new java.awt.Font("Segoe UI Semibold", 0, 12)); // NOI18N
         jLabel12.setText("Tidak Punya Akun?");
@@ -227,6 +246,14 @@ public class Login extends javax.swing.JFrame {
             }
         });
         jPanel2.add(jLabel13, new org.netbeans.lib.awtextra.AbsoluteConstraints(331, 546, -1, -1));
+
+        jLabel8.setIcon(new javax.swing.ImageIcon(getClass().getResource("/apk/makost/icon/logout.png"))); // NOI18N
+        jLabel8.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jLabel8MouseClicked(evt);
+            }
+        });
+        jPanel2.add(jLabel8, new org.netbeans.lib.awtextra.AbsoluteConstraints(564, 704, 50, 50));
 
         jPanel1.add(jPanel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(727, 0, 640, 769));
 
@@ -246,9 +273,9 @@ public class Login extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void txtusernameActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtusernameActionPerformed
+    private void txtusernameloginActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtusernameloginActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_txtusernameActionPerformed
+    }//GEN-LAST:event_txtusernameloginActionPerformed
 
     private void disableMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_disableMouseClicked
         // TODO add your handling code here:
@@ -261,7 +288,7 @@ public class Login extends javax.swing.JFrame {
 
     private void showMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_showMouseClicked
         // TODO add your handling code here:
-                txtpassword.setEchoChar((char)8226);
+        txtpassword.setEchoChar((char)8226);
         disable.setVisible(true);
         disable.setEnabled(true);
         show.setEnabled(false);
@@ -273,6 +300,55 @@ public class Login extends javax.swing.JFrame {
         this.setVisible(false);
         new Register().setVisible(true);
     }//GEN-LAST:event_jLabel13MouseClicked
+
+    private void btn_loginActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_loginActionPerformed
+        // TODO add your handling code here:
+        user u = new user();
+        try{
+            String sql = "SELECT hak_akses, foto FROM tbl_user WHERE username='"+txtusernamelogin.getText()+"'AND password='"
+                    +txtpassword.getText()+"'";
+            java.sql.Connection conn = (Connection)apk.makost.koneksi.Koneksi.configDB();
+            java.sql.PreparedStatement pst = conn.prepareStatement(sql);
+            java.sql.ResultSet rs = pst.executeQuery();
+            while(rs.next()){
+            hakakses = rs.getString("hak_akses");
+            u.foto = rs.getString("foto");
+            } 
+             if (u.foto.equals("") && hakakses.equals("")) {
+                JOptionPane.showMessageDialog(null, "akun tidak ditemukan");
+            }       
+            else if (u.foto != null && hakakses.equals("admin")) {
+                JOptionPane.showMessageDialog(null, "Admin Berhasil Login ");
+                this.setVisible(false);
+                Main mainFrame = new Main();
+                mainFrame.setVisible(true);
+                apk.makost.form.Profil p = new apk.makost.form.Profil();
+                p.setFoto(u.foto);
+                p.refreshFoto();
+            }
+            else if (u.foto != null && hakakses.equals("karyawan")) {
+                JOptionPane.showMessageDialog(null, "Karyawan Berhasil Login");
+                this.setVisible(false);
+                new Main2().setVisible(true);
+            }            
+//            else if(txtusername.getText().equals(rs.getString("username"))
+//                        && txtpassword.getText().equals(rs.getString("password"))){
+//                    JOptionPane.showMessageDialog(null, "Berhasil Login");
+//                    this.setVisible(false);     
+//                    new Main().setVisible(true);
+//            }
+            else{
+                JOptionPane.showMessageDialog(null, "Username atau Password Salah");
+            }
+        }catch (Exception e){
+            JOptionPane.showMessageDialog(this, e.getMessage());
+        }
+    }//GEN-LAST:event_btn_loginActionPerformed
+
+    private void jLabel8MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel8MouseClicked
+        // TODO add your handling code here:
+        System.exit(0);
+    }//GEN-LAST:event_jLabel8MouseClicked
 
     /**
      * @param args the command line arguments
@@ -300,6 +376,7 @@ public class Login extends javax.swing.JFrame {
             java.util.logging.Logger.getLogger(Login.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
         //</editor-fold>
+        //</editor-fold>
 
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
@@ -310,9 +387,9 @@ public class Login extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton btn_login;
     private javax.swing.JLabel disable;
     private apk.makost.component.Header header1;
-    private javax.swing.JButton jButton1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel11;
@@ -324,6 +401,7 @@ public class Login extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;
     private javax.swing.JLabel jLabel7;
+    private javax.swing.JLabel jLabel8;
     private javax.swing.JLabel jLabel9;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
@@ -333,7 +411,7 @@ public class Login extends javax.swing.JFrame {
     private javax.swing.JPanel jPanel6;
     private javax.swing.JLabel show;
     private javax.swing.JPasswordField txtpassword;
-    private javax.swing.JTextField txtusername;
+    public static javax.swing.JTextField txtusernamelogin;
     // End of variables declaration//GEN-END:variables
 class RoundedPanel extends JPanel
     {

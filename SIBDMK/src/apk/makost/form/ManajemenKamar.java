@@ -7,6 +7,8 @@ package apk.makost.form;
 
 import apk.makost.koneksi.Koneksi;
 import static apk.makost.koneksi.Koneksi.conn;
+import com.barcodelib.barcode.AbstractBarcode;
+import java.awt.image.BufferedImage;
 import java.sql.Statement;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -25,6 +27,16 @@ import java.time.format.DateTimeFormatter;
 import java.util.Calendar;
 import java.util.Date;
 import javax.swing.UIManager;
+import java.util.Random;
+import net.sourceforge.jbarcodebean.model.Ean13;
+import jbarcodebean.JBarcodeBean;
+import net.sourceforge.jbarcodebean.model.AbstractBarcodeStrategy;
+import net.sourceforge.jbarcodebean.model.Codabar;
+import com.barcodelib.barcode.Linear;
+import java.awt.Font;
+import javax.swing.ImageIcon;
+import jnaFile
+
 
 
 
@@ -35,11 +47,10 @@ import javax.swing.UIManager;
 
 public class ManajemenKamar extends javax.swing.JPanel {
     
-    
 //    method tabel kamar
     private void tabel_tersedia(){
         DefaultTableModel data = new DefaultTableModel();
-        data.addColumn("Id Manajemen Kamar");
+        data.addColumn("Kode Manajemen Kamar");
         data.addColumn("No Kamar");
         data.addColumn("Id Penghuni");
         data.addColumn("Nama");
@@ -52,7 +63,7 @@ public class ManajemenKamar extends javax.swing.JPanel {
 
         String cari = txtcari.getText();
         try{
-            String sql = "SELECT id_manajemen, no_kamar, tbl_manajemen_kamar.id_penghuni, nama, registrasi, jthtempo FROM tbl_manajemen_kamar "
+            String sql = "SELECT kd_manajemen, no_kamar, tbl_manajemen_kamar.id_penghuni, nama, registrasi, jthtempo FROM tbl_manajemen_kamar "
                     + "JOIN tbl_penghuni ON tbl_manajemen_kamar.id_penghuni = tbl_penghuni.id_penghuni "
                     + "WHERE tbl_manajemen_kamar.id_penghuni LIKE '%"+cari+"%' "
                     + "or nama LIKE '%"+cari+"%' or registrasi LIKE '%"+cari+"%' or jthtempo LIKE '%"+cari+"%'"
@@ -112,7 +123,7 @@ public class ManajemenKamar extends javax.swing.JPanel {
 //    mengosongkan inputan yang telah diambil
     private void Clear(){
 //        dateJatuhTempo.setDateFormatString("");
-        txtIdManajemenKamar.setText("");
+        txtIdManajemenKamar.enable();
         cmbNamaPenghuni.setSelectedItem(null);
         cmbnoKamar.setSelectedItem(null);
         tabel_tersedia();
@@ -127,6 +138,7 @@ public class ManajemenKamar extends javax.swing.JPanel {
         tabel_tersedia();
         cmbnoKamar();
         cmbNamaPenghuni();
+        auto_id_manajemen();
         
         txtJatuhTempo.setText(sDateFormate.format(date));
     }
@@ -137,26 +149,87 @@ public class ManajemenKamar extends javax.swing.JPanel {
         txtJatuhTempo.setText(jthtempo);
     }
     
+//    auto id manajemen
+    private void auto_id_manajemen(){
+        try {
+            java.sql.Connection conn = (Connection) apk.makost.koneksi.Koneksi.configDB();
+            Statement st = conn.createStatement();
+
+            String sql = "SELECT max(right(kd_manajemen, 4)) FROM tbl_manajemen_kamar";
+            ResultSet rs = st.executeQuery(sql);
+
+            if (rs.next()) {
+                String kd_auto, nol_plus;
+                int p;
+                kd_auto = Integer.toString(rs.getInt(1)+1);
+                p = kd_auto.length();
+                nol_plus = "";
+                for(int i = 1; i <= 4 - p; i++){
+                    nol_plus = nol_plus + "0";
+                }
+                txtIdManajemenKamar.setText("KDMK" + nol_plus+kd_auto);
+            } else {
+                txtIdManajemenKamar.setText("KDMK0001");
+            }
+
+            rs.close();
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(null, e);
+        }
+    }
+    
 //    simpan data
     private void simpanManajemenKamar(){
 //        INSERT INTO `tbl_manajemen_kamar` (`id_manajemen`, `no_kamar`, `id_penghuni`, `jthtempo`) 
 //          VALUES (NULL, '4', '8', NULL);
 
         String jthtempo = txtJatuhTempo.getText();
+        String kd_manajemen = String.valueOf(txtIdManajemenKamar.getText());
         try{
-            String sql = "INSERT INTO `tbl_manajemen_kamar` ( `id_manajemen`, `no_kamar`, `id_penghuni`, jthtempo) VALUES "
-                    + "(NULL, '"+cmbnoKamar.getSelectedItem()+"', '"+cmbNamaPenghuni.getSelectedItem()+"', '"+jthtempo+"')";
+            String sql = "INSERT INTO `tbl_manajemen_kamar` ( `kd_manajemen`, `no_kamar`, `id_penghuni`, jthtempo) VALUES "
+                    + "('"+kd_manajemen+"','"+cmbnoKamar.getSelectedItem()+"', '"+cmbNamaPenghuni.getSelectedItem()+"', "
+                    + "'"+jthtempo+"')";
             java.sql.Connection conn = (Connection)apk.makost.koneksi.Koneksi.configDB();
             java.sql.PreparedStatement pst = conn.prepareStatement(sql);
             int row = pst.executeUpdate(sql);
+//            generate(id_manajemen);
+            Linear barcode = new Linear();
+
+            barcode.setType(Linear.CODE128B);
+
+            barcode.setData(txtIdManajemenKamar.getText());
+            barcode.setI(11.0f);
+            barcode.setUOM(AbstractBarcode.UOM_PIXEL);
+            barcode.setX(3f);
+            barcode.setY(75f);
+            barcode.setLeftMargin(0);
+            barcode.setRightMargin(0);
+            barcode.setTopMargin(0);
+            barcode.setBottomMargin(0);
+            barcode.setResolution(72);
+            barcode.setShowText(true);
+            barcode.setTextFont(new Font("Arial", 0, 12));
+            
+            
+            String fname = txtIdManajemenKamar.getText();
+            
+            barcode.renderBarcode("src\\apk\\makost\\img\\barcode\\" + fname + ".png");
             if (row==1) {
                 JOptionPane.showMessageDialog(null, "Data Berhasil Disimpan");
             }
             Clear();
+            auto_id_manajemen();
         } catch (Exception e){
             JOptionPane.showMessageDialog(this, "Data Tidak Tersimpan \n" + e.getMessage());
         }
         tabel_tersedia();
+    }
+    
+//    export bacode
+    private boolean exportBarcode(BufferedImage imageBarcode){
+        JnaFileChooser fileChooser = new JnaFileChooser();
+        boolean action = fileChooser.showSaveDialog(window);
+        
     }
     /**
      * This method is called from within the constructor to initialize the form.
@@ -180,6 +253,9 @@ public class ManajemenKamar extends javax.swing.JPanel {
         jLabel2 = new javax.swing.JLabel();
         txtJatuhTempo = new apk.makost.swing.TextField();
         txtIdManajemenKamar = new apk.makost.swing.TextField();
+        jLabel3 = new javax.swing.JLabel();
+        lb_barcode = new javax.swing.JLabel();
+        btnSimpanManajemenKamar1 = new apk.makost.swing.Button();
 
         setBackground(new java.awt.Color(236, 243, 255));
         setPreferredSize(new java.awt.Dimension(1069, 663));
@@ -269,6 +345,11 @@ public class ManajemenKamar extends javax.swing.JPanel {
 
         txtJatuhTempo.setEditable(false);
         txtJatuhTempo.setLabelText("Tanggal Jatuh Tempo");
+        txtJatuhTempo.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                txtJatuhTempoActionPerformed(evt);
+            }
+        });
 
         txtIdManajemenKamar.setEditable(false);
         txtIdManajemenKamar.setLabelText("Id Manajemen Kamar");
@@ -278,60 +359,83 @@ public class ManajemenKamar extends javax.swing.JPanel {
             }
         });
 
+        jLabel3.setForeground(new java.awt.Color(153, 153, 153));
+        jLabel3.setText("Barcode");
+
+        lb_barcode.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
+
+        btnSimpanManajemenKamar1.setBackground(new java.awt.Color(210, 70, 70));
+        btnSimpanManajemenKamar1.setForeground(new java.awt.Color(255, 255, 255));
+        btnSimpanManajemenKamar1.setText("EXPORT BARCODE");
+        btnSimpanManajemenKamar1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnSimpanManajemenKamar1ActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout shadowPanel1Layout = new javax.swing.GroupLayout(shadowPanel1);
         shadowPanel1.setLayout(shadowPanel1Layout);
         shadowPanel1Layout.setHorizontalGroup(
             shadowPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, shadowPanel1Layout.createSequentialGroup()
-                .addContainerGap(30, Short.MAX_VALUE)
+                .addGap(30, 30, 30)
                 .addGroup(shadowPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(shadowPanel1Layout.createSequentialGroup()
+                        .addComponent(btnResetManajemenKamar, javax.swing.GroupLayout.PREFERRED_SIZE, 73, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(btnSimpanManajemenKamar, javax.swing.GroupLayout.PREFERRED_SIZE, 73, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(btnEditManajemenKamar, javax.swing.GroupLayout.PREFERRED_SIZE, 73, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(btnSimpanManajemenKamar1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(402, 402, 402)
+                        .addComponent(txtcari, javax.swing.GroupLayout.PREFERRED_SIZE, 203, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 1003, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addGroup(shadowPanel1Layout.createSequentialGroup()
                         .addGroup(shadowPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(txtIdManajemenKamar, javax.swing.GroupLayout.PREFERRED_SIZE, 233, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(jLabel1)
                             .addComponent(cmbnoKamar, javax.swing.GroupLayout.PREFERRED_SIZE, 233, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGap(224, 224, 224)
+                        .addGap(135, 135, 135)
                         .addGroup(shadowPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(txtJatuhTempo, javax.swing.GroupLayout.PREFERRED_SIZE, 233, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(jLabel2)
                             .addComponent(cmbNamaPenghuni, javax.swing.GroupLayout.PREFERRED_SIZE, 233, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, shadowPanel1Layout.createSequentialGroup()
+                        .addGap(91, 91, 91)
                         .addGroup(shadowPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 1003, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addGroup(shadowPanel1Layout.createSequentialGroup()
-                                .addComponent(btnResetManajemenKamar, javax.swing.GroupLayout.PREFERRED_SIZE, 73, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(btnSimpanManajemenKamar, javax.swing.GroupLayout.PREFERRED_SIZE, 73, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(btnEditManajemenKamar, javax.swing.GroupLayout.PREFERRED_SIZE, 73, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(469, 469, 469)
-                                .addComponent(txtcari, javax.swing.GroupLayout.PREFERRED_SIZE, 203, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                        .addGap(36, 36, 36))))
+                            .addComponent(lb_barcode, javax.swing.GroupLayout.PREFERRED_SIZE, 311, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jLabel3))))
+                .addContainerGap(36, Short.MAX_VALUE))
         );
         shadowPanel1Layout.setVerticalGroup(
             shadowPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(shadowPanel1Layout.createSequentialGroup()
                 .addContainerGap(27, Short.MAX_VALUE)
-                .addGroup(shadowPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(txtJatuhTempo, javax.swing.GroupLayout.DEFAULT_SIZE, 60, Short.MAX_VALUE)
-                    .addComponent(txtIdManajemenKamar, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                .addGap(18, 18, 18)
-                .addGroup(shadowPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                .addGroup(shadowPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(shadowPanel1Layout.createSequentialGroup()
-                        .addComponent(jLabel1)
+                        .addGroup(shadowPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(txtIdManajemenKamar, javax.swing.GroupLayout.PREFERRED_SIZE, 60, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(txtJatuhTempo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(18, 18, 18)
+                        .addGroup(shadowPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(jLabel1)
+                            .addComponent(jLabel2))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(cmbnoKamar, javax.swing.GroupLayout.PREFERRED_SIZE, 46, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGroup(shadowPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(cmbnoKamar, javax.swing.GroupLayout.PREFERRED_SIZE, 46, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(cmbNamaPenghuni, javax.swing.GroupLayout.PREFERRED_SIZE, 46, javax.swing.GroupLayout.PREFERRED_SIZE)))
                     .addGroup(shadowPanel1Layout.createSequentialGroup()
-                        .addComponent(jLabel2)
+                        .addGap(6, 6, 6)
+                        .addComponent(jLabel3)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(cmbNamaPenghuni, javax.swing.GroupLayout.PREFERRED_SIZE, 46, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addGap(30, 30, 30)
+                        .addComponent(lb_barcode, javax.swing.GroupLayout.PREFERRED_SIZE, 124, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addGap(24, 24, 24)
                 .addGroup(shadowPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(txtcari, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(btnResetManajemenKamar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(btnSimpanManajemenKamar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(btnEditManajemenKamar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(btnEditManajemenKamar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(btnSimpanManajemenKamar1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 282, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(109, 109, 109))
@@ -354,11 +458,7 @@ public class ManajemenKamar extends javax.swing.JPanel {
     }//GEN-LAST:event_txtcariActionPerformed
 
     private void btnSimpanManajemenKamarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSimpanManajemenKamarActionPerformed
-        // TODO add your handling code here:
-//       INSERT INTO `tbl_kamar`(`no_kamar`, `lantai`, `kd_kapasitas`, `fasilitas`, `status`)
-//       VALUES ('6', '1', '2 orang', 'asd', 'tersedia' )
         simpanManajemenKamar();
-//        cmbnoKamar();
     }//GEN-LAST:event_btnSimpanManajemenKamarActionPerformed
 
     private void cmbnoKamarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cmbnoKamarActionPerformed
@@ -366,15 +466,14 @@ public class ManajemenKamar extends javax.swing.JPanel {
     }//GEN-LAST:event_cmbnoKamarActionPerformed
 
     private void btnResetManajemenKamarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnResetManajemenKamarActionPerformed
-        // TODO add your handling code here:
         Clear();
+        auto_id_manajemen();
     }//GEN-LAST:event_btnResetManajemenKamarActionPerformed
 
     private void tbl_manajemenKamarMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tbl_manajemenKamarMouseClicked
-        // TODO add your handling code here:
         int baris = tbl_manajemenKamar.rowAtPoint(evt.getPoint());
-        String id_manajemenKamar = tbl_manajemenKamar.getValueAt(baris, 0).toString();
-        txtIdManajemenKamar.setText(id_manajemenKamar);
+        String kd_manajemenKamar = tbl_manajemenKamar.getValueAt(baris, 0).toString();
+        txtIdManajemenKamar.setText(kd_manajemenKamar);
         txtIdManajemenKamar.disable();
         if(tbl_manajemenKamar.getValueAt(baris, 1)== null){
             cmbnoKamar.setSelectedItem(this);
@@ -391,6 +490,8 @@ public class ManajemenKamar extends javax.swing.JPanel {
         }else{
             txtJatuhTempo.setText(tbl_manajemenKamar.getValueAt(baris, 5).toString());
         }
+        ImageIcon imgThisImg = new ImageIcon("src\\apk\\makost\\img\\barcode\\" + txtIdManajemenKamar.getText() + ".png");
+        lb_barcode.setIcon(imgThisImg);
     }//GEN-LAST:event_tbl_manajemenKamarMouseClicked
 
     private void btnEditManajemenKamarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEditManajemenKamarActionPerformed
@@ -399,7 +500,7 @@ public class ManajemenKamar extends javax.swing.JPanel {
         try{
             String sql = "UPDATE tbl_manajemen_kamar SET no_kamar = '"+cmbnoKamar.getSelectedItem()+"', "
                     + "id_penghuni = '"+cmbNamaPenghuni.getSelectedItem()+"' "
-                    + "WHERE tbl_manajemen_kamar.id_manajemen = '"+txtIdManajemenKamar.getText()+"'";
+                    + "WHERE tbl_manajemen_kamar.kd_manajemen = '"+txtIdManajemenKamar.getText()+"'";
             java.sql.Connection conn = (Connection)apk.makost.koneksi.Koneksi.configDB();
             java.sql.PreparedStatement pst = conn.prepareStatement(sql);
             pst.execute();
@@ -423,20 +524,34 @@ public class ManajemenKamar extends javax.swing.JPanel {
         // TODO add your handling code here:
     }//GEN-LAST:event_txtIdManajemenKamarActionPerformed
 
+    private void txtJatuhTempoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtJatuhTempoActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_txtJatuhTempoActionPerformed
+
+    private void btnSimpanManajemenKamar1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSimpanManajemenKamar1ActionPerformed
+        // TODO add your handling code here:
+        
+    }//GEN-LAST:event_btnSimpanManajemenKamar1ActionPerformed
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private apk.makost.swing.Button btnEditManajemenKamar;
     private apk.makost.swing.Button btnResetManajemenKamar;
     private apk.makost.swing.Button btnSimpanManajemenKamar;
+    private apk.makost.swing.Button btnSimpanManajemenKamar1;
     private apk.makost.swing.Combobox cmbNamaPenghuni;
     private apk.makost.swing.Combobox cmbnoKamar;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
+    private javax.swing.JLabel jLabel3;
     private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JLabel lb_barcode;
     private apk.makost.swing.ShadowPanel shadowPanel1;
     private apk.makost.swing.Table tbl_manajemenKamar;
     private apk.makost.swing.TextField txtIdManajemenKamar;
     private apk.makost.swing.TextField txtJatuhTempo;
     private apk.makost.swing.TextField txtcari;
     // End of variables declaration//GEN-END:variables
+
+    
 }

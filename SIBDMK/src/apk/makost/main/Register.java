@@ -1,8 +1,4 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
+
 package apk.makost.main;
 
 import java.awt.Color;
@@ -13,6 +9,16 @@ import java.awt.Image;
 import java.awt.LayoutManager;
 import java.awt.RenderingHints;
 import java.io.File;
+import java.nio.file.Files;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.regex.Pattern;
 import javax.swing.ImageIcon;
 import javax.swing.JFileChooser;
 import javax.swing.JFrame;
@@ -24,37 +30,65 @@ import javax.swing.JPanel;
  * @author DELL
  */
 public class Register extends javax.swing.JFrame {
-private String filename;
-    /**
-     * Creates new form Register
-     */
+    private String filename;
+    private PreparedStatement stat;
+    private ResultSet rs;
+    private String jabatanSebelumnya = "";
+    
     public Register() {
         initComponents();
         this.setExtendedState(JFrame.MAXIMIZED_BOTH);
-        
+        autonumber();
     }
     
     class akun extends Register{
     String iduser="", username="",password="",nadep="",nabel="",hewan="",
-            alamat="",hobi="",nik="",email="",notelp="",jabatan="",tgllahir="";
+            alamat="",hobi="",nik="",email="",notelp="",jabatan="",tgllahir="",foto="";
     public akun(){
-    iduser= txtiduser.getText(); 
-    username= txtuserregis.getText();
-    password= txtpwregis.getText();
-    nadep= txtnadep.getText();
-    nabel= txtnabel.getText();
-    hewan= txtnamahewan.getText();
-    alamat= txtalamat.getText();
-    hobi= txthobi.getText();
-    nik= txtnik.getText();
-    email= txtemail.getText();
-    notelp= txtnotelp.getText();
-    jabatan= cbjabatan.getSelectedItem().toString();
-    tgllahir= jDateChooser1.getDateFormatString();
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+        iduser = txtiduser.getText(); 
+        username = txtuserregis.getText();
+        password = txtpwregis.getText();
+        nadep = txtnadep.getText();
+        nabel = txtnabel.getText();
+        hewan = txtnamahewan.getText();
+        alamat = txtalamat.getText();
+        hobi = txthobi.getText();
+        nik = txtnik.getText();
+        email = txtemail.getText();
+        notelp = txtnotelp.getText();
+        jabatan = cbjabatan.getSelectedItem().toString();
+        tgllahir = sdf.format(jDateChooser1.getDate()).toString();
+        }
+    }
     
+    private void autonumber(){
+    try{
+            java.sql.Connection conn = (Connection)apk.makost.koneksi.Koneksi.configDB();
+            Statement s = conn.createStatement();
+            String sql = "SELECT *FROM tbl_user ORDER BY id_user DESC";
+            ResultSet r = s.executeQuery(sql);
+            if (r.next()){
+                String NoFaktur = r.getString("id_user").substring(2);
+                String BR = "" + (Integer.parseInt(NoFaktur) + 1);
+                String Nol = "";               
+                if(BR.length()==1){
+                    Nol = "00";
+                }else if(BR.length()==2){
+                    Nol = "0";
+                }else if(BR.length()==3){
+                    Nol = "";
+                }
+                txtiduser.setText("US" + Nol + BR);
+            }else{
+                txtiduser.setText("US001");
+            }
+            r.close();
+            s.close();
+        }catch(Exception e){
+            System.out.println("autonumber error"+e.getMessage());
+        }
     }
-    }
-
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -114,6 +148,7 @@ private String filename;
         labelfoto = new javax.swing.JLabel();
         btnpilihfoto = new javax.swing.JButton();
         jLabel36 = new javax.swing.JLabel();
+        jDateChooser1 = new com.toedter.calendar.JDateChooser();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -206,6 +241,7 @@ private String filename;
         jPanel2.add(jLabel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 200, -1, 30));
 
         txtiduser.setBorder(null);
+        txtiduser.setEnabled(false);
         jPanel2.add(txtiduser, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 200, 260, -1));
 
         jLabel5.setFont(new java.awt.Font("Segoe UI Semilight", 0, 12)); // NOI18N
@@ -349,6 +385,11 @@ private String filename;
 
         cbjabatan.setFont(new java.awt.Font("Segoe UI Semilight", 0, 12)); // NOI18N
         cbjabatan.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "admin", "karyawan", " " }));
+        cbjabatan.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                cbjabatanActionPerformed(evt);
+            }
+        });
         jPanel2.add(cbjabatan, new org.netbeans.lib.awtextra.AbsoluteConstraints(420, 450, 120, -1));
 
         jLabel35.setFont(new java.awt.Font("Segoe UI Semilight", 0, 12)); // NOI18N
@@ -356,7 +397,7 @@ private String filename;
         jPanel2.add(jLabel35, new org.netbeans.lib.awtextra.AbsoluteConstraints(420, 430, 270, -1));
 
         labelfoto.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
-        jPanel2.add(labelfoto, new org.netbeans.lib.awtextra.AbsoluteConstraints(420, 500, 130, 120));
+        jPanel2.add(labelfoto, new org.netbeans.lib.awtextra.AbsoluteConstraints(420, 500, 220, 120));
 
         btnpilihfoto.setFont(new java.awt.Font("Segoe UI Semilight", 0, 12)); // NOI18N
         btnpilihfoto.setText("Pilih Foto");
@@ -365,11 +406,12 @@ private String filename;
                 btnpilihfotoActionPerformed(evt);
             }
         });
-        jPanel2.add(btnpilihfoto, new org.netbeans.lib.awtextra.AbsoluteConstraints(570, 590, -1, -1));
+        jPanel2.add(btnpilihfoto, new org.netbeans.lib.awtextra.AbsoluteConstraints(650, 590, -1, -1));
 
         jLabel36.setFont(new java.awt.Font("Segoe UI Semilight", 0, 12)); // NOI18N
         jLabel36.setText("Tanggal Lahir");
         jPanel2.add(jLabel36, new org.netbeans.lib.awtextra.AbsoluteConstraints(420, 380, 270, -1));
+        jPanel2.add(jDateChooser1, new org.netbeans.lib.awtextra.AbsoluteConstraints(420, 400, 270, -1));
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -421,8 +463,65 @@ private String filename;
 
     private void btnbuatakunActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnbuatakunActionPerformed
         // TODO add your handling code here:
-        
+        try {
+            akun a = new akun();
+            // Validasi panjang dan komposisi password
+        if (a.password.length() < 8) {
+            JOptionPane.showMessageDialog(null, "Password harus memiliki minimal 8 karakter", "Kesalahan",
+                    JOptionPane.ERROR_MESSAGE);
+            return; // Menghentikan proses pembuatan akun jika password tidak memenuhi syarat
+        }
+         else if (!a.password.matches(".*\\d.*") || !a.password.matches(".*[a-zA-Z].*")) {
+            JOptionPane.showMessageDialog(null, "Password harus mengandung setidaknya satu angka dan satu karakter", 
+                    "Kesalahan", JOptionPane.ERROR_MESSAGE);
+            return; // Menghentikan proses pembuatan akun jika password tidak memenuhi syarat
+        }// Validasi email
+         else if(!(Pattern.matches("^[a-zA-z0-9]+[@]{1}+[a-zA-z0-9]+[.]{1}+[a-zA-z0-9]+$", txtemail.getText()))){
+                JOptionPane.showMessageDialog(null, "Email Tidak Valid", "Gagal", JOptionPane.ERROR_MESSAGE);
+                return;
+            }
+         
+            String newpath = "src/upload";
+            File directory = new File(newpath);
+            if(!directory.exists()){
+                directory.mkdirs();}
+            File fileawal = null;//tempat simpan awal setelah dipilih
+            File fileakhir = null;
+            String ext = this.filename.substring(filename.lastIndexOf('.')+1);//eksensijpg
+            fileawal = new File(filename);
+            fileakhir = new File(newpath+"/"+txtnik.getText()+"."+ext);// di rename
+            System.out.println(fileakhir);
+            String sql = "insert into tbl_user values (?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
+            java.sql.Connection conn = (Connection)apk.makost.koneksi.Koneksi.configDB();
+            java.sql.PreparedStatement pst = conn.prepareStatement(sql);
+            pst.setString(1, a.iduser);
+            pst.setString(2, a.username);
+            pst.setString(3, a.password);
+            pst.setString(4, a.nadep);
+            pst.setString(5, a.nabel);
+            pst.setString(6, a.hewan);
+            pst.setString(7, a.notelp);
+            pst.setString(8, a.email);
+            pst.setString(9, a.tgllahir);
+            pst.setString(10,a.jabatan);
+            pst.setString(11,a.nik);
+            pst.setString(12,a.hobi);
+            pst.setString(13,a.alamat);
+            pst.setString(14,fileakhir.toString());
+            pst.executeUpdate();
+            JOptionPane.showMessageDialog(null, "Akun sudah terdaftar, silahkan kembali login");
+            Files.copy(fileawal.toPath(), fileakhir.toPath());//copyfile
+            Login log = new Login();
+            log.setVisible(true);
+            this.setVisible(false);
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(null,"Data Tidak ditambahkan ke database"+e,"message",JOptionPane.INFORMATION_MESSAGE);
+        }
     }//GEN-LAST:event_btnbuatakunActionPerformed
+
+    private void cbjabatanActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cbjabatanActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_cbjabatanActionPerformed
 
     /**
      * @param args the command line arguments
@@ -450,6 +549,7 @@ private String filename;
             java.util.logging.Logger.getLogger(Register.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
         //</editor-fold>
+        //</editor-fold>
 
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
@@ -465,6 +565,7 @@ private String filename;
     private javax.swing.JButton btnpilihfoto;
     private javax.swing.JComboBox<String> cbjabatan;
     private apk.makost.component.Header header2;
+    private com.toedter.calendar.JDateChooser jDateChooser1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel11;

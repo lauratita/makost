@@ -1,21 +1,135 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package apk.makost.form;
+
+import javax.swing.plaf.basic.BasicInternalFrameUI;
+import java.sql.*;
+import javax.swing.JOptionPane;
+import com.mysql.cj.jdbc.StatementImpl;
+import com.toedter.calendar.demo.DateChooserPanel;
+import java.text.SimpleDateFormat;
+import javax.swing.RowFilter;
+import javax.swing.table.DefaultTableModel;
+import javax.swing.table.TableModel;
+import javax.swing.table.TableRowSorter;
+import java.util.Locale;
+import javax.swing.Timer;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import static apk.makost.koneksi.Koneksi.conn;
+import java.sql.Connection;
+import java.sql.ResultSet;
+import java.sql.Statement;
+import java.util.Date;
+import apk.makost.main.Main;
+import apk.makost.form.RiwayatPenghuni;
+//import static apk.makost.main.Main.body;
 
 /**
  *
- * @author dF
+ * @author Melvina
  */
 public class Penghuni extends javax.swing.JPanel {
 
-    /**
-     * Creates new form Penghuni
-     */
+    private Connection con;
+    private String sql = "";
+    private Statement stm;
+
+    Date date = new Date();
+    SimpleDateFormat sDateFormate = new SimpleDateFormat("yyyy-MM-dd");
+
+    String id_penghuni;
+
     public Penghuni() {
         initComponents();
+        this.setBorder(javax.swing.BorderFactory.createEmptyBorder(0, 0, 0, 0));
+        datatable();
+        tampil_tanggal();
+        tampil_id_otomatis();
+
+        jLabelregister.setText(sDateFormate.format(date));
+    }
+
+    private String IDPenghuni, NIK, Nama, Alamat, TanggalLahir, nohp, registrasi, nohportu;
+
+//  membuat koneksi dengan database    
+    public void Koneksi() {
+        try {
+            Class.forName("com.mysql.jdbc.Driver");
+            Connection con = DriverManager.getConnection("jdbc:mysql://localhost:3306/db_kos", "root", "");
+            Statement stat = (Statement) con.createStatement();
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(null, e);
+        }
+    }
+
+    private void tampil_id_otomatis() {
+        try {
+            java.sql.Connection conn = (Connection) apk.makost.koneksi.Koneksi.configDB();
+            Statement st = conn.createStatement();
+
+            String sql = "SELECT id_penghuni FROM tbl_penghuni ORDER BY id_penghuni DESC LIMIT 1";
+            ResultSet rs = st.executeQuery(sql);
+
+            if (rs.next()) {
+                String lastID = rs.getString("id_penghuni");
+                int numericPart = Integer.parseInt(lastID.substring(1)) + 1;
+                String newID = "P" + String.format("%03d", numericPart);
+                txtIDPenghuni.setText(newID);
+            } else {
+                txtIDPenghuni.setText("P001");
+            }
+
+            rs.close();
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(null, e);
+        }
+    }
+
+//  membuat tabel
+    private void datatable() {
+        DefaultTableModel tbl = new DefaultTableModel();
+        tblPenghuni.setModel(tbl);
+        tbl.addColumn("ID Penghuni");
+        tbl.addColumn("Nama");
+        tbl.addColumn("NIK");
+        tbl.addColumn("Alamat");
+        tbl.addColumn("No Handphone");
+        tbl.addColumn("No Handphone Orang Tua");
+        tbl.addColumn("Tanggal Lahir");
+        tbl.addColumn("Registrasi");
+
+        try {
+            Statement st = (Statement) apk.makost.koneksi.Koneksi.configDB().createStatement();
+            ResultSet res = st.executeQuery("SELECT * FROM tbl_penghuni");
+            while (res.next()) {
+                Object[] o = new Object[8];
+                o[0] = res.getString("id_penghuni");
+                o[1] = res.getString("nama");
+                o[2] = res.getString("nik");
+                o[3] = res.getString("alamat");
+                o[4] = res.getString("noHP");
+                o[5] = res.getString("noHP_ortu");
+                o[6] = res.getString("tanggal_lahir");
+                o[7] = res.getString("registrasi");
+                tbl.addRow(o);
+            }
+        } catch (Exception e) {
+        }
+
+    }
+
+    public void tampil_tanggal() {
+    }
+
+//  mengosongkan inputan yang telah diambil
+    private void Clear() {
+        txtIDPenghuni.setText("");
+        txtNIK.setText("");
+        txtNama.setText("");
+        txtNoHP.setText("");
+        txtNoHPOrtu.setText("");
+        txtAlamat.setText("");
+        txtTanggalLahir.setCalendar(null);
+        jLabelregister.setToolTipText("");
     }
 
     /**
@@ -27,31 +141,369 @@ public class Penghuni extends javax.swing.JPanel {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        shadowPanel1 = new apk.makost.swing.ShadowPanel();
+        txtNIK = new apk.makost.swing.TextField();
         jLabel1 = new javax.swing.JLabel();
+        txtAlamat = new apk.makost.swing.TextField();
+        txtTanggalLahir = new com.toedter.calendar.JDateChooser();
+        jLabel2 = new javax.swing.JLabel();
+        txtNoHPOrtu = new apk.makost.swing.TextField();
+        btnResetPenghuni = new apk.makost.swing.Button();
+        txtCari = new apk.makost.swing.TextField();
+        jScrollPane1 = new javax.swing.JScrollPane();
+        tblPenghuni = new apk.makost.swing.Table();
+        btnSimpanPenghuni = new apk.makost.swing.Button();
+        btnKeluarPenghuni = new apk.makost.swing.Button();
+        jLabelregister = new javax.swing.JLabel();
+        txtNoHP = new apk.makost.swing.TextField();
+        txtIDPenghuni = new apk.makost.swing.TextField();
+        txtNama = new apk.makost.swing.TextField();
+        btnUpdatePenghuni = new apk.makost.swing.Button();
 
-        jLabel1.setFont(new java.awt.Font("Segoe UI", 3, 24)); // NOI18N
-        jLabel1.setText("Penghuni");
+        txtNIK.setLabelText("NIK");
+
+        jLabel1.setForeground(new java.awt.Color(153, 153, 153));
+        jLabel1.setText("Registrasi");
+
+        txtAlamat.setLabelText("Alamat");
+
+        jLabel2.setForeground(new java.awt.Color(153, 153, 153));
+        jLabel2.setText("Tanggal Lahir");
+
+        txtNoHPOrtu.setLabelText("No Handphone Orang Tua");
+
+        btnResetPenghuni.setBackground(new java.awt.Color(126, 166, 195));
+        btnResetPenghuni.setForeground(new java.awt.Color(255, 255, 255));
+        btnResetPenghuni.setText("RESET");
+        btnResetPenghuni.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnResetPenghuniActionPerformed(evt);
+            }
+        });
+
+        txtCari.setLabelText("Cari");
+        txtCari.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                txtCariKeyReleased(evt);
+            }
+        });
+
+        tblPenghuni.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null}
+            },
+            new String [] {
+                "Title 1", "Title 2", "Title 3", "Title 4"
+            }
+        ));
+        tblPenghuni.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                tblPenghuniMouseClicked(evt);
+            }
+        });
+        jScrollPane1.setViewportView(tblPenghuni);
+
+        btnSimpanPenghuni.setBackground(new java.awt.Color(126, 166, 195));
+        btnSimpanPenghuni.setForeground(new java.awt.Color(255, 255, 255));
+        btnSimpanPenghuni.setText("SIMPAN");
+        btnSimpanPenghuni.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnSimpanPenghuniActionPerformed(evt);
+            }
+        });
+
+        btnKeluarPenghuni.setBackground(new java.awt.Color(210, 70, 70));
+        btnKeluarPenghuni.setForeground(new java.awt.Color(255, 255, 255));
+        btnKeluarPenghuni.setText("KELUAR");
+        btnKeluarPenghuni.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnKeluarPenghuniActionPerformed(evt);
+            }
+        });
+
+        jLabelregister.setForeground(new java.awt.Color(3, 155, 216));
+        jLabelregister.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(3, 155, 216)));
+
+        txtNoHP.setLabelText("No Handphone");
+
+        txtIDPenghuni.setEditable(false);
+        txtIDPenghuni.setLabelText("ID Penghuni");
+        txtIDPenghuni.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                txtIDPenghuniActionPerformed(evt);
+            }
+        });
+
+        txtNama.setLabelText("Nama");
+
+        btnUpdatePenghuni.setBackground(new java.awt.Color(126, 166, 195));
+        btnUpdatePenghuni.setForeground(new java.awt.Color(255, 255, 255));
+        btnUpdatePenghuni.setText("UPDATE");
+        btnUpdatePenghuni.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnUpdatePenghuniActionPerformed(evt);
+            }
+        });
+
+        javax.swing.GroupLayout shadowPanel1Layout = new javax.swing.GroupLayout(shadowPanel1);
+        shadowPanel1.setLayout(shadowPanel1Layout);
+        shadowPanel1Layout.setHorizontalGroup(
+            shadowPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, shadowPanel1Layout.createSequentialGroup()
+                .addGap(118, 118, 118)
+                .addComponent(btnResetPenghuni, javax.swing.GroupLayout.PREFERRED_SIZE, 90, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(btnUpdatePenghuni, javax.swing.GroupLayout.PREFERRED_SIZE, 90, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(txtCari, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(219, 219, 219))
+            .addGroup(shadowPanel1Layout.createSequentialGroup()
+                .addGap(75, 75, 75)
+                .addGroup(shadowPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(shadowPanel1Layout.createSequentialGroup()
+                        .addGroup(shadowPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addComponent(txtNIK, javax.swing.GroupLayout.DEFAULT_SIZE, 150, Short.MAX_VALUE)
+                            .addComponent(txtIDPenghuni, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                        .addGap(59, 59, 59)
+                        .addGroup(shadowPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addComponent(txtAlamat, javax.swing.GroupLayout.DEFAULT_SIZE, 180, Short.MAX_VALUE)
+                            .addComponent(txtNama, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                        .addGap(49, 49, 49)
+                        .addGroup(shadowPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(txtNoHP, javax.swing.GroupLayout.PREFERRED_SIZE, 175, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(txtNoHPOrtu, javax.swing.GroupLayout.PREFERRED_SIZE, 175, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(54, 54, 54)
+                        .addGroup(shadowPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jLabelregister, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jLabel1)
+                            .addComponent(txtTanggalLahir, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jLabel2)))
+                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 900, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap(94, Short.MAX_VALUE))
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, shadowPanel1Layout.createSequentialGroup()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(btnKeluarPenghuni, javax.swing.GroupLayout.PREFERRED_SIZE, 90, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(btnSimpanPenghuni, javax.swing.GroupLayout.PREFERRED_SIZE, 90, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(115, 115, 115))
+        );
+        shadowPanel1Layout.setVerticalGroup(
+            shadowPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(shadowPanel1Layout.createSequentialGroup()
+                .addGap(81, 81, 81)
+                .addGroup(shadowPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addGroup(shadowPanel1Layout.createSequentialGroup()
+                        .addComponent(jLabel2)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(txtTanggalLahir, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(shadowPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(txtNoHP, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(txtNama, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(txtIDPenghuni, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addGap(83, 83, 83)
+                .addGroup(shadowPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addGroup(shadowPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(txtAlamat, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(txtNIK, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(txtNoHPOrtu, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(shadowPanel1Layout.createSequentialGroup()
+                        .addComponent(jLabel1)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(jLabelregister, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addGap(38, 38, 38)
+                .addGroup(shadowPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(txtCari, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(btnResetPenghuni, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(btnUpdatePenghuni, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(18, 18, 18)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(18, 18, 18)
+                .addGroup(shadowPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(btnSimpanPenghuni, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(btnKeluarPenghuni, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap(17, Short.MAX_VALUE))
+        );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addGap(148, 148, 148)
-                .addComponent(jLabel1)
-                .addContainerGap(147, Short.MAX_VALUE))
+            .addComponent(shadowPanel1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGap(118, 118, 118)
-                .addComponent(jLabel1)
-                .addContainerGap(150, Short.MAX_VALUE))
+                .addComponent(shadowPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(0, 0, Short.MAX_VALUE))
         );
     }// </editor-fold>//GEN-END:initComponents
 
+    private void btnResetPenghuniActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnResetPenghuniActionPerformed
+        Clear();
+    }//GEN-LAST:event_btnResetPenghuniActionPerformed
+
+    private void btnKeluarPenghuniActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnKeluarPenghuniActionPerformed
+        DefaultTableModel tbll = (DefaultTableModel) tblPenghuni.getModel();
+        try {
+            String id_penghuni = tbll.getValueAt(tblPenghuni.getSelectedRow(), 0).toString();
+            String sql = "DELETE FROM tbl_penghuni WHERE id_penghuni=?";
+
+            java.sql.Connection conn = apk.makost.koneksi.Koneksi.configDB();
+            PreparedStatement pst = conn.prepareStatement(sql);
+            pst.setString(1, id_penghuni);
+
+            int confirm = JOptionPane.showConfirmDialog(this,
+                    "Yakin penghuni ingin keluar?",
+                    "Konfirmasi Hapus",
+                    JOptionPane.YES_NO_OPTION,
+                    JOptionPane.QUESTION_MESSAGE);
+            if (confirm == JOptionPane.YES_OPTION) {
+                int row = pst.executeUpdate();
+                if (row == 1) {
+                    JOptionPane.showMessageDialog(this, "Data penghuni berhasil dihapus");;
+                } else {
+                    JOptionPane.showMessageDialog(this, "Data tidak ditemukan");
+                }
+            }
+
+            conn.close();
+            datatable();
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(this, "Error: " + e.getMessage());
+        }
+        Clear();
+    }//GEN-LAST:event_btnKeluarPenghuniActionPerformed
+
+    private void btnSimpanPenghuniActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSimpanPenghuniActionPerformed
+        java.util.Date tglsekarang = new java.util.Date();
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+        String registrasi = sdf.format(tglsekarang);
+        System.out.println(jLabelregister.getText());
+        String id_penghuni = txtIDPenghuni.getText();
+        String nama = txtNama.getText();
+        String nik = txtNIK.getText();
+        String alamat = txtAlamat.getText();
+        String noHP = txtNoHP.getText();
+        String noHP_ortu = txtNoHPOrtu.getText();
+        String register = Locale.getDefault().toString();
+        String tanggal_lahir = sdf.format(txtTanggalLahir.getDate()).toString();
+        try {
+            Statement st = (Statement) apk.makost.koneksi.Koneksi.configDB().createStatement();
+            st.executeUpdate("INSERT INTO tbl_penghuni VALUES ('" + id_penghuni + "', '" + nama + "', '"
+                    + nik + "', '" + alamat + "', '" + noHP + "', '" + noHP_ortu + "', '"
+                    + tanggal_lahir + "', '" + registrasi + "');");
+            st.close();
+            JOptionPane.showMessageDialog(null, "Data Berhasil Disimpan");
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(null, "Gagal!" + e.getMessage());
+        }
+        datatable();
+        Clear();
+        tampil_id_otomatis();
+    }//GEN-LAST:event_btnSimpanPenghuniActionPerformed
+
+    private void txtCariKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtCariKeyReleased
+        DefaultTableModel ob = (DefaultTableModel) tblPenghuni.getModel();
+        TableRowSorter<DefaultTableModel> obj = new TableRowSorter<>(ob);
+        tblPenghuni.setRowSorter(obj);
+
+        // mengubah teks pencarian menjadi huruf kecil
+        String keyword = txtCari.getText().toLowerCase();
+        // (?i) digunakan untuk membuat pencarian menjadi tidak case-sensitive 
+        RowFilter<DefaultTableModel, Object> filter = RowFilter.regexFilter("(?i)" + keyword);
+        obj.setRowFilter(filter);
+    }//GEN-LAST:event_txtCariKeyReleased
+
+    private void tblPenghuniMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tblPenghuniMouseClicked
+        DefaultTableModel tblModel = (DefaultTableModel) tblPenghuni.getModel();
+
+        try {
+            // Mengonversi String tanggal_lahir menjadi objek Date
+            SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
+            Date tanggalLahir = (Date) dateFormat.parse(tblModel.getValueAt(tblPenghuni.getSelectedRow(), 6).toString());
+
+            String idPenghuni = tblModel.getValueAt(tblPenghuni.getSelectedRow(), 0).toString();
+            String nama = tblModel.getValueAt(tblPenghuni.getSelectedRow(), 1).toString();
+            String nik = tblModel.getValueAt(tblPenghuni.getSelectedRow(), 2).toString();
+            String alamat = tblModel.getValueAt(tblPenghuni.getSelectedRow(), 3).toString();
+            String noHP = tblModel.getValueAt(tblPenghuni.getSelectedRow(), 4).toString();
+            String noHP_ortu = tblModel.getValueAt(tblPenghuni.getSelectedRow(), 5).toString();
+            String register = tblModel.getValueAt(tblPenghuni.getSelectedRow(), 7).toString();
+
+            txtIDPenghuni.setText(idPenghuni);
+            txtNama.setText(nama);
+            txtNIK.setText(nik);
+            txtAlamat.setText(alamat);
+            txtNoHP.setText(noHP);
+            txtNoHPOrtu.setText(noHP_ortu);
+            txtTanggalLahir.setDate(tanggalLahir);
+            jLabelregister.setText(register);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+    }//GEN-LAST:event_tblPenghuniMouseClicked
+
+    private void btnUpdatePenghuniActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnUpdatePenghuniActionPerformed
+        btnUpdatePenghuni.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                String id_penghuni = txtIDPenghuni.getText();
+                String nama = txtNama.getText();
+                String alamat = txtAlamat.getText();
+                String noHP = txtNoHP.getText();
+
+                try {
+                    java.sql.Connection conn = (Connection) apk.makost.koneksi.Koneksi.configDB();
+                    Statement st = conn.createStatement();
+                    st.executeUpdate("UPDATE tbl_penghuni SET nama='" + nama + "', "
+                            + "alamat='" + alamat + "', noHP='" + noHP + "' WHERE id_penghuni='" + id_penghuni + "'");
+                    st.close();
+                    JOptionPane.showMessageDialog(null, "Data Berhasil di Edit");
+
+                    txtIDPenghuni.setText("");
+                    txtNama.setText("");
+                    txtNIK.setText("");
+                    txtAlamat.setText("");
+                    txtNoHP.setText("");
+                    txtNoHPOrtu.setText("");
+                    txtTanggalLahir.setCalendar(null);
+                    jLabelregister.setToolTipText("");
+
+                    datatable();
+                } catch (Exception ex) {
+                    JOptionPane.showMessageDialog(null, "Perubahan data gagal: " + ex.getMessage());
+                }
+            }
+        });
+
+    }//GEN-LAST:event_btnUpdatePenghuniActionPerformed
+
+    private void txtIDPenghuniActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtIDPenghuniActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_txtIDPenghuniActionPerformed
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private apk.makost.swing.Button btnKeluarPenghuni;
+    private apk.makost.swing.Button btnResetPenghuni;
+    private apk.makost.swing.Button btnSimpanPenghuni;
+    private apk.makost.swing.Button btnUpdatePenghuni;
     private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel2;
+    private javax.swing.JLabel jLabelregister;
+    private javax.swing.JScrollPane jScrollPane1;
+    private apk.makost.swing.ShadowPanel shadowPanel1;
+    private apk.makost.swing.Table tblPenghuni;
+    private apk.makost.swing.TextField txtAlamat;
+    private apk.makost.swing.TextField txtCari;
+    private apk.makost.swing.TextField txtIDPenghuni;
+    private apk.makost.swing.TextField txtNIK;
+    private apk.makost.swing.TextField txtNama;
+    private apk.makost.swing.TextField txtNoHP;
+    private apk.makost.swing.TextField txtNoHPOrtu;
+    private com.toedter.calendar.JDateChooser txtTanggalLahir;
     // End of variables declaration//GEN-END:variables
 }
